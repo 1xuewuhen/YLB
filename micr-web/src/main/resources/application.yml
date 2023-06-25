@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: micr-web
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+server:
+  port: 8000
+  servlet:
+    context-path: /api
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+
+dubbo:
+  registry:
+    address: zookeeper://127.0.0.1:2181
+  scan:
+    base-packages: com.xwh.front
+  consumer:
+    timeout: 50000
+    retries: 0
+    check: false
+
+
