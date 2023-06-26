@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductInfo> productInfos = new ArrayList<>();
         if (pType == 0 || pType == 1 || pType == 2) {
             pageNo = CommonUtil.defaultPageNo(pageNo);
-            pageSize = CommonUtil.defaultPageNo(pageSize);
+            pageSize = CommonUtil.defaultPageSize(pageSize);
             int offset = (pageNo - 1) * pageSize;
             productInfos = productInfoMapper.selectByTypeLimit(pType, offset, pageSize);
         }
