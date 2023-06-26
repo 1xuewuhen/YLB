@@ -52,7 +52,7 @@ public class ProductController extends BaseController {
         R error = R.error();
         if (pType != null && (pType == 0 || pType == 1 || pType == 2)) {
             pageNo = CommonUtil.defaultPageNo(pageNo);
-            pageSize = CommonUtil.defaultPageNo(pageSize);
+            pageSize = CommonUtil.defaultPageSize(pageSize);
             // 分页处理，记录总数
             Integer recordNumbers = productService.queryRecordNumbers(pType);
             if (recordNumbers > 0) {
