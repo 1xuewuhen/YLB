@@ -1,12 +1,12 @@
 <template>
   <li>
-    <h3 v-if="productTitle=='优选产品'" class="preferred-select-title">
+    <h3 v-if="sign=='1'" class="preferred-select-title">
       <span>{{ item.productName }}</span>
       <img src="@/assets/image/1-bg1.jpg" alt="" v-if="index==0">
       <img src="@/assets/image/1-bg2.jpg" alt="" v-else-if="index==1">
       <img src="@/assets/image/1-bg3.jpg" alt="" v-else>
     </h3>
-    <h3 v-if="productTitle=='散标产品'" class="preferred-select-title1">
+    <h3 v-else-if="sign=='2'" class="preferred-select-title1">
       {{ item.productName }}
       <span>散标</span>
     </h3>
@@ -38,7 +38,7 @@ import {Product} from "@/interface/typeInterface";
 withDefaults(defineProps<{
   item: Product,
   index: number,
-  productTitle: string
+  sign: string
 }>(), {
   item: {
     id: 0,
@@ -58,7 +58,7 @@ withDefaults(defineProps<{
     version: 0
   },
   index: 0,
-  productTitle: '优选产品'
+  sign: '1'
 })
 
 </script>
