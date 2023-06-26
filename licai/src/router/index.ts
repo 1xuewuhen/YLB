@@ -10,11 +10,11 @@ const routes: RouteRecordRaw[] = [
     }, {
         path: '/page/product/list',
         name: 'pageProductList',
-        component: () => import('@/views/List/ListView.vue')
+        component: () => import('@/views/list/ListView.vue')
     }, {
         path: '/page/product/detail',
         name: 'pageProductDetail',
-        component: () => import('@/views/Detail/DetailView.vue')
+        component: () => import('@/views/detail/DetailView.vue')
     }
 ]
 const router = createRouter({
