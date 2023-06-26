@@ -2,14 +2,11 @@ import {createRouter, createWebHistory, type RouteRecordRaw} from 'vue-router'
 
 
 const routes: RouteRecordRaw[] = [
-    {
-        path: '/',
-        name: '',
-        component: () => import('@/views/index/IndexView.vue')
-    },
+
     {
         path: '/index',
         name: 'index',
+        alias:['/'],
         component: () => import('@/views/index/IndexView.vue')
     }
 ]

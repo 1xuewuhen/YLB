@@ -4,7 +4,7 @@ export interface PlatInfoType {
     sumBigMoney?: number
 }
 
-export interface Product1 {
+export interface Product {
     id?: number;
     productName?: string;
     rate?: number;
@@ -23,7 +23,7 @@ export interface Product1 {
 }
 
 export interface ProductType {
-    noviceTreasure?: Product1[];
-    preferred?: Product1[];
-    scatterLabel?: Product1[];
+    noviceTreasure?: Product[];
+    preferred?: Product[];
+    scatterLabel?: Product[];
 }

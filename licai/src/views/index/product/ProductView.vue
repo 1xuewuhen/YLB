@@ -4,18 +4,18 @@
     <h2 class="public-title"><span>新手宝</span></h2>
     <div class="new-user" v-for="noviceTreasure in product.noviceTreasure" :key="noviceTreasure.id">
       <div class="new-user-sm">
-        <span>{{noviceTreasure.bidMinLimit}}元起投</span>
-        <span>投资最高限额{{noviceTreasure.bidMaxLimit}}元</span>
+        <span>{{ noviceTreasure.bidMinLimit }}元起投</span>
+        <span>投资最高限额{{ noviceTreasure.bidMaxLimit }}元</span>
         <span>当日即系</span>
       </div>
       <div class="new-user-number">
         <ul>
           <li>
-            <p><b>{{noviceTreasure.rate}}</b>%</p>
+            <p><b>{{ noviceTreasure.rate }}</b>%</p>
             <span>历史年化收益率</span>
           </li>
           <li>
-            <p><b>{{noviceTreasure.cycle}}</b>天</p>
+            <p><b>{{ noviceTreasure.cycle }}</b>天</p>
             <span>投资周期</span>
           </li>
           <li>
@@ -28,8 +28,8 @@
       <span class="new-tag">新用户专享</span>
     </div>
 
-    <SpecificProductView></SpecificProductView>
-    <SpecificProductView></SpecificProductView>
+    <SpecificProductView :preferred="product.preferred! as Product[]" :productTitle="'优选产品'"></SpecificProductView>
+    <SpecificProductView :scatterLabel="product.scatterLabel! as Product[]" :productTitle="'散标产品'"></SpecificProductView>
 
     <!--    <h2 class="public-title"><span>散标产品</span> <a href="list.html" target="_blank" class="public-title-more">查看更多产品>></a>
         </h2>
@@ -108,9 +108,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import {ref, onMounted, computed} from "vue";
+import {ref, onMounted} from "vue";
 import SpecificProductView from "@/views/index/product/specificProduct/SpecificProductView.vue";
-import {ProductType,Product1} from '@/interface/typeInterface'
+import {ProductType,Product} from '@/interface/typeInterface'
 import HttpUtil from "@/api";
 
 const product = ref<ProductType>({noviceTreasure: [], preferred: [], scatterLabel: []})
@@ -121,21 +121,7 @@ onMounted(() => {
     }
   })
 })
-// const noviceTreasure = computed<Product1>(() => {
-//   console.log(product.value.noviceTreasure)
-//   return 'null'
-// })
-//
-// const preferred = computed<>(() => {
-//   return product.value.preferred
-// })
-//
-// const scatterLabel = computed<>(() => {
-//   return product.value.scatterLabel
-// })
-// console.log(noviceTreasure.value)
-// console.log(preferred.value)
-// console.log(scatterLabel.value)
+
 </script>
 
 
