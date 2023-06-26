@@ -10,6 +10,7 @@ import '@/assets/css/user_center.css'
 import '@/assets/css/user_pay.css'
 import HeaderView from "@/components/header/HeaderView.vue";
 import FooterView from '@/components/footer/FooterView.vue'
+import PagingView from "@/components/paging/PagingView.vue";
 
 import {createApp} from 'vue'
 import {createPinia} from 'pinia'
@@ -24,4 +25,5 @@ app.use(createPinia())
 app.use(router)
 app.component("HeaderView", HeaderView)
 app.component("FooterView", FooterView)
+app.component("PagingView", PagingView)
 app.mount('#app')

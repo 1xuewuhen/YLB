@@ -34,7 +34,7 @@
 </template>
 <script setup lang="ts">
 import {ref, onMounted} from "vue";
-import SpecificProductView from "@/views/index/product/specificProduct/SpecificProductView.vue";
+import SpecificProductView from "./specificProduct/SpecificProductView.vue";
 import {ProductType,Product} from '@/interface/typeInterface'
 import HttpUtil from "@/api";
 

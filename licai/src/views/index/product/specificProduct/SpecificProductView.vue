@@ -10,7 +10,7 @@
   </ul>
 </template>
 <script setup lang="ts">
-import ProductTreasureView from "@/views/index/product/specificProduct/productTreasure/ProductTreasureView.vue";
+import ProductTreasureView from "./productTreasure/ProductTreasureView.vue";
 import {Product} from '@/interface/typeInterface'
 
 

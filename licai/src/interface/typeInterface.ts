@@ -27,3 +27,15 @@ export interface ProductType {
     preferred?: Product[];
     scatterLabel?: Product[];
 }
+
+export interface RankType {
+    phone?: string;
+    money?: number;
+}
+
+export interface PageType {
+    pageNo?: number;
+    pageSize?: number;
+    totalPage?: number;
+    totalRecord?: number;
+}

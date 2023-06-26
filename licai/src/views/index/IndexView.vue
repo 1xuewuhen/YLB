@@ -13,9 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import BannerVien from "@/views/index/banner/BannerVien.vue";
-import ProductView from "@/views/index/product/ProductView.vue"
-import ExplainView from "@/views/index/explain/ExplainView.vue";
+import BannerVien from "./banner/BannerVien.vue";
+import ProductView from "./product/ProductView.vue"
+import ExplainView from "./explain/ExplainView.vue";
 </script>
 
 <style scoped>
