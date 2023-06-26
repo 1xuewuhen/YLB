@@ -1,10 +1,17 @@
 <template>
-  <h2 class="public-title"><span>{{productTitle}}</span> <a href="list.html" target="_blank"
-                                                    class="public-title-more">查看更多产品>></a>
+  <h2 class="public-title"><span>{{ productTitle }}</span>
+    <router-link v-if="productTitle=='优选产品'" :to='{path:"/page/product/list",query:{pType:1}}'
+                 class="public-title-more">查看更多产品
+    </router-link>
+    <router-link v-else-if="productTitle=='散标产品'" :to='{path:"/page/product/list",query:{pType:2}}'
+                 class="public-title-more">查看更多产品
+    </router-link>
   </h2>
   <ul class="preferred-select clearfix">
-    <ProductTreasureView v-if="productTitle=='优选产品'" v-for="(item,index) in preferred" :key="item.id" :item="item! as Product" :index="index" :productTitle='"优选产品"'></ProductTreasureView>
-    <ProductTreasureView v-if="productTitle=='散标产品'" v-for="(item,index) in scatterLabel" :key="item.id" :item="item! as Product" :index="index" :productTitle='"散标产品"'></ProductTreasureView>
+    <ProductTreasureView v-if="productTitle=='优选产品'" v-for="(item,index) in preferred" :key="item.id"
+                         :item="item! as Product" :index="index" :productTitle='"优选产品"'></ProductTreasureView>
+    <ProductTreasureView v-if="productTitle=='散标产品'" v-for="(item,index) in scatterLabel" :key="item.id"
+                         :item="item! as Product" :index="index" :productTitle='"散标产品"'></ProductTreasureView>
   </ul>
   <!--    <li>
         <h3 class="preferred-select-title">
@@ -65,47 +72,47 @@ import {Product} from '@/interface/typeInterface'
 withDefaults(defineProps<{
   preferred: Array<Product>,
   scatterLabel: Array<Product>,
-  productTitle:string
-}>(),{
-  preferred:[
+  productTitle: string
+}>(), {
+  preferred: [
     {
-      id:0,
-      productName:'',
-      rate:0,
-      cycle:0,
-      releaseTime:0,
-      productType:'',
-      productNo:'',
-      productMoney:0,
-      leftProductMoney:0,
-      bidMinLimit:0,
-      bidMaxLimit:0,
-      productStatus:0,
-      productFullTime:0,
-      productDesc:'',
-      version:0
+      id: 0,
+      productName: '',
+      rate: 0,
+      cycle: 0,
+      releaseTime: 0,
+      productType: '',
+      productNo: '',
+      productMoney: 0,
+      leftProductMoney: 0,
+      bidMinLimit: 0,
+      bidMaxLimit: 0,
+      productStatus: 0,
+      productFullTime: 0,
+      productDesc: '',
+      version: 0
     }
   ],
-  scatterLabel:[
+  scatterLabel: [
     {
-      id:0,
-      productName:'',
-      rate:0,
-      cycle:0,
-      releaseTime:0,
-      productType:'',
-      productNo:'',
-      productMoney:0,
-      leftProductMoney:0,
-      bidMinLimit:0,
-      bidMaxLimit:0,
-      productStatus:0,
-      productFullTime:0,
-      productDesc:'',
-      version:0
+      id: 0,
+      productName: '',
+      rate: 0,
+      cycle: 0,
+      releaseTime: 0,
+      productType: '',
+      productNo: '',
+      productMoney: 0,
+      leftProductMoney: 0,
+      bidMinLimit: 0,
+      bidMaxLimit: 0,
+      productStatus: 0,
+      productFullTime: 0,
+      productDesc: '',
+      version: 0
     }
   ],
-  productTitle:'优选产品'
+  productTitle: '优选产品'
 })
 
 </script>
