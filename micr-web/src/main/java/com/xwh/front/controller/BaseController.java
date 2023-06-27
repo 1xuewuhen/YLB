@@ -4,7 +4,6 @@ import com.xwh.api.service.PlatBaseInfoService;
 import com.xwh.api.service.ProductService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.annotation.Resource;
 
@@ -13,7 +12,7 @@ import javax.annotation.Resource;
  * @date 2023/6/22
  * @since 1.0
  */
-@CrossOrigin
+//@CrossOrigin
 public class BaseController {
 
     // 平台信息服务

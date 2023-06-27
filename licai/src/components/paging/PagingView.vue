@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import {PageType} from "@/interface/typeInterface";
 import layx from "vue-layx"
+import {ref} from "vue";
 
 
 const defaults = withDefaults(defineProps<{
@@ -26,8 +27,6 @@ const defaults = withDefaults(defineProps<{
     totalRecord: 0
   }
 });
-
-
 const emit = defineEmits<{
   (e: "on-click", pageNo: number): void
 }>()

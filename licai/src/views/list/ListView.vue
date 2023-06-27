@@ -27,7 +27,7 @@
 import ProductTreasureView from "./productList/ProductListView.vue";
 import {useRoute} from 'vue-router';
 import {PageType, Product, RankType} from '@/interface/typeInterface'
-import {onMounted, ref} from "vue";
+import {onMounted, watch, ref} from "vue";
 import HttpUtil from "@/api";
 import layx from "vue-layx"
 
@@ -62,28 +62,27 @@ const page = ref<PageType>({
   totalRecord: 0
 })
 onMounted(() => {
-  initPage()
+  initPage(route.query.pType as number,1)
   HttpUtil.get('/v1/invest/rank').then(value => {
     if (value.data.code == 1000) {
       rank.value = value.data.list
     }
   })
 })
-
+watch([route], (value, oldValue, onCleanup) => {
+  initPage(value[0].query.pType as number,1)
+  // console.log(value[0].query.pType)
+  // console.log(oldValue[0].query.pType)
+}, {
+  deep: true
+})
 const getPageNo = (pageNo: number) => {
-  // if (page.value.pageNo < 1) {
-  //   layx.msg('已在首页', {dialogIcon: 'warn'})
-  //   // page.value.pageNo == 1 ?  :
-  // } else if (page.value.pageNo > page.value.totalPage){
-  //   layx.msg('已在末页', {dialogIcon: 'warn'})
-  // }else {
-  //   initPage(pageNo)
-  // }
-  initPage(pageNo)
+
+  initPage(route.query.pType as number, pageNo)
 
 }
-const initPage = (pageNo: number) => {
-  HttpUtil.get('/v1/product/list', {pType: route.query.pType, pageNo: pageNo, pageSize: 9}).then(value => {
+const initPage = (pType: number | string, pageNo: number) => {
+  HttpUtil.get('/v1/product/list', {pType: pType, pageNo: pageNo, pageSize: 9}).then(value => {
     if (value.data.code == 1000) {
       product.value = value.data.list
       page.value = value.data.page
