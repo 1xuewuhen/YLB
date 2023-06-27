@@ -21,8 +21,8 @@ public enum RCode {
     REQUEST_PARAM_ERROR(1001,"请求参数有误"),
     REQUEST_PRODUCT_TYPE_ERROR(1002,"产品类型有误")
     ;
-    private Integer code;
-    private String message;
+    private final Integer code;
+    private final String message;
 
     RCode(Integer code, String message) {
         this.code = code;
