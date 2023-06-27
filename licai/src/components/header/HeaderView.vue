@@ -3,9 +3,9 @@
   <div class="public-head">
     <div class="public-head-nav">
       <div class="public-head-left">
-        <h1 class="public-head-logo"><a href="javascript:;">
+        <h1 class="public-head-logo"><router-link to="/">
           <img src="@/assets/image/logo.png" alt="">
-        </a></h1>
+        </router-link></h1>
         <ul class="public-head-list">
           <li><router-link to="/">主页</router-link></li>
           <li class="public-head-hover">

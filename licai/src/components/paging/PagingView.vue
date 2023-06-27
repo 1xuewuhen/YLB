@@ -14,8 +14,6 @@
 <script setup lang="ts">
 import {PageType} from "@/interface/typeInterface";
 import layx from "vue-layx"
-import {ref} from "vue";
-
 
 const defaults = withDefaults(defineProps<{
   page: PageType

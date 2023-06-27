@@ -23,7 +23,7 @@
             <span>余利可投资金额</span>
           </li>
         </ul>
-        <a href="details.html" target="_blank" class="new-user-btn">立即投资</a>
+        <router-link :to="{path:'/page/product/detail',query:{productId:noviceTreasure.id}}" class="new-user-btn">立即投资</router-link>
       </div>
       <span class="new-tag">新用户专享</span>
     </div>

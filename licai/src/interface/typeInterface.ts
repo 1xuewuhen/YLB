@@ -39,3 +39,28 @@ export interface PageType {
     totalPage?: number;
     totalRecord?: number;
 }
+
+export interface ProductInfoType {
+    id?: number;
+    productName?: string;
+    rate?: number;
+    cycle?: number;
+    releaseTime?: number;
+    productType?: number;
+    productNo?: string;
+    productMoney?: number;
+    leftProductMoney?: number;
+    bidMinLimit?: number;
+    bidMaxLimit?: number;
+    productStatus?: number;
+    productFullTime?: number;
+    productDesc?: string;
+    version?: number;
+}
+
+export interface BidInfoListType {
+    id?: number;
+    phone?: string;
+    bidTime?: string;
+    bidMoney?: number;
+}
