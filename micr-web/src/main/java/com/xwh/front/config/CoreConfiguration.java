@@ -20,7 +20,7 @@ public class CoreConfiguration {
         //1. 添加 CORS配置信息
         final CorsConfiguration config = new CorsConfiguration();
         //放行哪些原始域
-        config.addAllowedOriginPattern("*");
+        config.addAllowedOriginPattern("http://localhost:5173");
         //是否发送 Cookie
         config.setAllowCredentials(true);
         //放行哪些请求方式

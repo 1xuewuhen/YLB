@@ -1,8 +1,11 @@
 package com.xwh.dataservice.mapper;
 
 import com.xwh.api.model.BidInfo;
+import com.xwh.api.pojo.BidInfoProduct;
+import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface BidInfoMapper {
     int deleteByPrimaryKey(Integer id);
@@ -19,4 +22,7 @@ public interface BidInfoMapper {
 
     // 累计成交金额
     BigDecimal selectSubBidMoney();
+
+    // 查询某个产品的投注记录
+    List<BidInfoProduct> selectByProductId(@Param("productId") Integer productId, @Param("offset") Integer offset, @Param("rows") Integer rows);
 }

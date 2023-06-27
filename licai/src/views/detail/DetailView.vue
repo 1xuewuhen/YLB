@@ -1,10 +1,12 @@
 <template>
+  <HeaderView></HeaderView>
   <div>
     产品详情
 
     {{ route.query.productId }}
 
   </div>
+  <FooterView></FooterView>
 </template>
 
 <script setup lang="ts">

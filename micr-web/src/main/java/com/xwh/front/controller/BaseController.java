@@ -1,5 +1,6 @@
 package com.xwh.front.controller;
 
+import com.xwh.api.service.InvestService;
 import com.xwh.api.service.PlatBaseInfoService;
 import com.xwh.api.service.ProductService;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -25,4 +26,8 @@ public class BaseController {
 
     @Resource
     protected StringRedisTemplate stringRedisTemplate;
+
+    //投资服务
+    @DubboReference(interfaceClass = InvestService.class, version = "1.0")
+    protected InvestService investService;
 }

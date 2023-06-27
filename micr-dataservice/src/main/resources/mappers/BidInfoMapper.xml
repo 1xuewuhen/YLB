@@ -9,6 +9,13 @@
         <result column="bid_time" jdbcType="TIMESTAMP" property="bidTime"/>
         <result column="bid_status" jdbcType="INTEGER" property="bidStatus"/>
     </resultMap>
+
+<!--    <resultMap id="BidInfoProduct" type="com.xwh.api.pojo.BidInfoProduct">-->
+<!--        <id column="id"  property="id"/>-->
+<!--        <result column="phone"   property="phone"/>-->
+<!--        <result column="bidMoney" property="bidMoney"/>-->
+<!--        <result column="bidTime"  property="bidTime"/>-->
+<!--    </resultMap>-->
     <sql id="Base_Column_List">
         id
         , prod_id, uid, bid_money, bid_time, bid_status
@@ -23,6 +30,18 @@
     <select id="selectSubBidMoney" resultType="java.math.BigDecimal">
         select sum(bid_money) as sumBidMoney
         from b_bid_info
+    </select>
+    <select id="selectByProductId" resultType="com.xwh.api.pojo.BidInfoProduct">
+        select bbi.id                                                  as id,
+               concat(left(us.phone, 3), '******', right(us.phone, 2)) as phone,
+               bbi.bid_money                                           as bid_money,
+               DATE_FORMAT(bbi.bid_time, '%Y-%m-%d %H:%i:%s')          as bid_time
+        from b_bid_info bbi
+                 left join u_user us
+                           on bbi.uid = us.id
+        where bbi.prod_id = #{productId}
+        order by bid_time desc
+            limit #{offset}, #{rows}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete

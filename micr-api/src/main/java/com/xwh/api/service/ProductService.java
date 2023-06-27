@@ -20,4 +20,7 @@ public interface ProductService {
 
     // 首页多个产品数据
     MultiProduct queryIndexPageProducts();
+
+    // 根据产品id查询产品信息
+    ProductInfo queryProductInfoById(Integer id);
 }

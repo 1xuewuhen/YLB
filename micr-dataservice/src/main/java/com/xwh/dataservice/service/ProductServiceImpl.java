@@ -11,6 +11,7 @@ import org.apache.dubbo.config.annotation.DubboService;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 陈方银
@@ -71,5 +72,16 @@ public class ProductServiceImpl implements ProductService {
         List<ProductInfo> preferreds = productInfoMapper.selectByTypeLimit(YLBConstant.PRODUCT_TYPE_PREFERRED, 0, 3);
         List<ProductInfo> scatterLabels = productInfoMapper.selectByTypeLimit(YLBConstant.PRODUCT_TYPE_SCATTERLABEL, 0, 3);
         return MultiProduct.builder().noviceTreasure(noviceTreasures).preferred(preferreds).scatterLabel(scatterLabels).build();
+    }
+
+
+    // 根据产品id查询产品信息
+    @Override
+    public ProductInfo queryProductInfoById(Integer id) {
+        ProductInfo productInfo = null;
+        if (Objects.nonNull(id) && id > 0) {
+            productInfo = productInfoMapper.selectByPrimaryKey(id);
+        }
+        return productInfo;
     }
 }

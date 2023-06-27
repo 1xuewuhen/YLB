@@ -1,18 +1,22 @@
 package com.xwh.front.controller;
 
 import com.xwh.api.model.ProductInfo;
+import com.xwh.api.pojo.BidInfoProduct;
 import com.xwh.api.pojo.MultiProduct;
 import com.xwh.common.enums.RCode;
 import com.xwh.common.util.CommonUtil;
 import com.xwh.front.view.PageInfo;
 import com.xwh.front.view.R;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 陈方银
@@ -44,7 +48,7 @@ public class ProductController extends BaseController {
      * @date 2023/6/22 12:29
      * @version 1.0
      */
-    @ApiOperation(value = "某个产品的记录总数",notes = "分页，总数")
+    @ApiOperation(value = "某个产品的记录总数", notes = "分页，总数")
     @GetMapping("/product/list")
     public R queryProductByType(@RequestParam("pType") Integer pType,
                                 @RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,
@@ -70,6 +74,26 @@ public class ProductController extends BaseController {
             error.setCode(RCode.REQUEST_PRODUCT_TYPE_ERROR.getCode()).setMsg(RCode.REQUEST_PRODUCT_TYPE_ERROR.getMessage());
         }
         return error;
+    }
+
+
+    // 查询某个产品的详情，投资记录
+    @GetMapping("/product/info")
+    @ApiOperation(value = "产品详情", notes = "查询某个产品的详情，投资记录")
+    public R queryProductDetail(@RequestParam("productId") Integer productId) {
+        R r = R.error();
+        if (Objects.nonNull(productId) && productId > 0) {
+            // 产品详情
+            ProductInfo productInfo = productService.queryProductInfoById(productId);
+            if (Objects.nonNull(productInfo)) {
+                // 投资记录
+                List<BidInfoProduct> bidInfoList = investService.queryBidListByProductId(productId, 1, 5);
+                r = R.ok().setData(productInfo).setList(bidInfoList);
+            } else {
+                r.setCode(RCode.PRODUCT_OFFLINE.getCode()).setMsg(RCode.PRODUCT_OFFLINE.getMessage());
+            }
+        }
+        return r;
     }
 
 }

@@ -7,8 +7,7 @@ package com.xwh.common.enums;
  */
 public enum RCode {
     /**
-     * @description:
-     * 1000=2000 请求参数有误，逻辑错误
+     * @description: 1000=2000 请求参数有误，逻辑错误
      * 2000-3000 服务器请求错误
      * 3000-4000 访问dubbo的应答结果
      * 0 默认
@@ -16,11 +15,11 @@ public enum RCode {
      * @date 2023/6/22 11:30
      * @version 1.0
      */
-    UN_KNOW(0,"请稍后重试"),
-    SUCCESS(1000,"请求成功"),
-    REQUEST_PARAM_ERROR(1001,"请求参数有误"),
-    REQUEST_PRODUCT_TYPE_ERROR(1002,"产品类型有误")
-    ;
+    UN_KNOW(0, "请稍后重试"),
+    SUCCESS(1000, "请求成功"),
+    REQUEST_PARAM_ERROR(1001, "请求参数有误"),
+    REQUEST_PRODUCT_TYPE_ERROR(1002, "产品类型有误"),
+    PRODUCT_OFFLINE(1003, "产品已经下线");
     private final Integer code;
     private final String message;
 
