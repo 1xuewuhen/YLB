@@ -22,8 +22,9 @@
         </ul>
       </div>
       <div class="public-head-right">
-        <a href="login.html" target="_blank">登录</a>
-        <a href="register.html" target="_blank">注册</a>
+<!--        <router-link to:"">登录</router-link>-->
+        <router-link to="/login">登录</router-link>
+        <router-link to="/register">注册</router-link>
       </div>
     </div>
   </div>

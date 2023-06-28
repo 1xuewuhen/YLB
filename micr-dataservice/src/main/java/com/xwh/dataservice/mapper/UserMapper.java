@@ -1,6 +1,7 @@
 package com.xwh.dataservice.mapper;
 
 import com.xwh.api.model.User;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -17,4 +18,7 @@ public interface UserMapper {
 
     // 统计注册人数
     Integer selectCountUser();
+
+    // 根据手机号查询数据
+    User selectByPhone(@Param("phone") String phone);
 }

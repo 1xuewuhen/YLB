@@ -39,7 +39,6 @@
     </div>
   </div>
 
-
   <FooterView></FooterView>
 </template>
 <script setup lang="ts">

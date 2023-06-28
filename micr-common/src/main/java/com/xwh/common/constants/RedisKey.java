@@ -7,4 +7,5 @@ package com.xwh.common.constants;
  */
 public interface RedisKey {
     String KEY_INVEST_RANK = "INVEST:RANK";
+    String KEY_PHONE_USER = "PHONE:USER";
 }

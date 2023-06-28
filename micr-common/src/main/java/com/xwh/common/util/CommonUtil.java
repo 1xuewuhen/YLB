@@ -1,6 +1,7 @@
 package com.xwh.common.util;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * @author 陈方银
@@ -32,5 +33,15 @@ public class CommonUtil {
             result = phone.substring(0, 3) + "******" + phone.substring(9, 11);
         }
         return result;
+    }
+
+    // 手机号格式
+
+    public static boolean checkPhone(String phone) {
+        if (Objects.nonNull(phone)){
+            return Pattern.matches("^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$", phone);
+        }else {
+            return false;
+        }
     }
 }

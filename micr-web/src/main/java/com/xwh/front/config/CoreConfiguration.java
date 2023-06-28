@@ -21,6 +21,7 @@ public class CoreConfiguration {
         final CorsConfiguration config = new CorsConfiguration();
         //放行哪些原始域
         config.addAllowedOriginPattern("http://127.0.0.1:5173");
+        config.addAllowedOriginPattern("http://localhost:5173");
         //是否发送 Cookie
         config.setAllowCredentials(true);
         //放行哪些请求方式
