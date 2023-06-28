@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
             if (Objects.isNull(user)) {
                 user = userMapper.selectByPhone(phone);
                 if (Objects.nonNull(user)){
-                    stringRedisTemplate.opsForValue().set(phone, JSON.toJSONString(user),5L, TimeUnit.MINUTES);
+                    stringRedisTemplate.opsForValue().set(phone, JSON.toJSONString(user),10L, TimeUnit.MINUTES);
                 }
             }
         }

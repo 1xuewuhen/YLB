@@ -36,7 +36,7 @@ public class UserController extends BaseController {
             if (Objects.isNull(user)) {
                 r = R.ok().setMsg("可以注册");
             }
-            //TODO 把查询到的数据放入redis中
+            // TODO 把查询到的数据放入redis中
         } else {
             r.setCode(RCode.PHONE_FORMAT_ERROR.getCode()).setMsg(RCode.PHONE_FORMAT_ERROR.getMessage());
         }
