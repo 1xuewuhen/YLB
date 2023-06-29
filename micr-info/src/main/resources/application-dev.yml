@@ -1,0 +1,31 @@
+server:
+  port: 6000
+
+spring:
+  mail:
+    host: smtp.qq.com
+    username: xxxxxxxxxxx@qq.com
+    password: xxxxxxxxxxx
+    port: 587
+    default-encoding: UTF-8
+
+  redis:
+    database: 10
+    host: 127.0.0.1
+    port: 6379
+dubbo:
+  registry:
+    address: zookeeper://127.0.0.1:2181
+  scan:
+    base-packages: com.xwh.info.service
+  provider:
+    timeout: 50000
+    retries: 0
+  protocol:
+    port: 20881
+    name: dubbo
+
+info:
+  email:
+    subject: 鳕鱼神教
+    context: 【鳕鱼神教】你的验证码是：{code}，三分种有效，请勿泄露个他人

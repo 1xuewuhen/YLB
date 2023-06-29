@@ -4,6 +4,7 @@ import com.xwh.api.service.InvestService;
 import com.xwh.api.service.PlatBaseInfoService;
 import com.xwh.api.service.ProductService;
 import com.xwh.api.service.UserService;
+import com.xwh.api.service.info.InfoService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -33,6 +34,10 @@ public class BaseController {
     protected InvestService investService;
 
     // 用户服务
-    @DubboReference(interfaceClass = UserService.class,version = "1.0")
+    @DubboReference(interfaceClass = UserService.class, version = "1.0")
     protected UserService userService;
+
+    //信息服务
+    @DubboReference(interfaceClass = InfoService.class, version = "1.0")
+    protected InfoService infoService;
 }
