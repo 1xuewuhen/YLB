@@ -21,4 +21,7 @@ public interface UserMapper {
 
     // 根据手机号查询数据
     User selectByPhone(@Param("phone") String phone);
+
+    // 根据邮箱查询数据
+    User selectByEmail(@Param("email") String email);
 }

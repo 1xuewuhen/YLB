@@ -1,9 +1,15 @@
 package com.xwh.info.service;
 
 import com.xwh.api.service.info.InfoService;
+import com.xwh.common.constants.RedisKey;
+import com.xwh.common.enums.ERRORCode;
+import com.xwh.common.exception.InfoException;
+import com.xwh.common.util.CommonUtil;
 import com.xwh.info.vo.QQInfoTemplate;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.util.StringUtils;
@@ -11,6 +17,9 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import java.util.Date;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author 陈方银
@@ -22,6 +31,9 @@ import java.util.Date;
 public class InfoServiceImpl implements InfoService {
 
     @Resource
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Resource
     private JavaMailSender javaMailSender;
 
     @Value("${spring.mail.username}")
@@ -30,9 +42,16 @@ public class InfoServiceImpl implements InfoService {
     @Resource
     private QQInfoTemplate qqInfoTemplate;
 
+    @Resource
+    private ThreadPoolExecutor executor;
+
+    // 发送邮件
     @Override
     public void sendEmail(String toEmail) {
-        if (StringUtils.hasText(toEmail)) {
+        if (!CommonUtil.checkEmail(toEmail)) {
+            throw new InfoException(CommonUtil.generateJSON(ERRORCode.EMAIL_NULL_ERROR.getCode(), ERRORCode.EMAIL_NULL_ERROR.getMessage()));
+        }
+        CompletableFuture.runAsync(() -> {
             try {
                 //true 代表支持复杂的类型
                 MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage(), true);
@@ -44,18 +63,18 @@ public class InfoServiceImpl implements InfoService {
                 mimeMessageHelper.setSubject(qqInfoTemplate.getSubject());
                 //邮件内容
                 String context = qqInfoTemplate.getContext();
-                context = context.replaceAll("\\{code}", "222222");
+                String randomAlphanumeric = RandomStringUtils.randomAlphanumeric(4);
+                context = context.replaceAll("\\{code}", randomAlphanumeric);
                 mimeMessageHelper.setText(context);
 //                mimeMessageHelper.addAttachment();
                 //邮件发送时间
                 mimeMessageHelper.setSentDate(new Date());
-
                 //发送邮件
                 javaMailSender.send(mimeMessageHelper.getMimeMessage());
-
+                stringRedisTemplate.boundValueOps(RedisKey.KEY_EMAIL_CODE_REG + toEmail).set(randomAlphanumeric, 3, TimeUnit.MINUTES);
             } catch (MessagingException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
-        }
+        }, executor);
     }
 }

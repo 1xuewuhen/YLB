@@ -22,6 +22,7 @@ public enum RCode {
     PRODUCT_OFFLINE(1003, "产品已经下线"),
     PHONE_FORMAT_ERROR(1004, "收机号格式不正确"),
     PHONE_EXISTS(1005, "收机号已经注册"),
+    EMAIL_EXISTS(1006, "收机号已经注册"),
     ;
     private final Integer code;
     private final String message;

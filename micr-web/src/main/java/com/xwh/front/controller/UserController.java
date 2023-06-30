@@ -1,7 +1,10 @@
 package com.xwh.front.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xwh.api.model.User;
+import com.xwh.common.enums.ERRORCode;
 import com.xwh.common.enums.RCode;
+import com.xwh.common.exception.InfoException;
 import com.xwh.common.util.CommonUtil;
 import com.xwh.front.view.R;
 import io.swagger.annotations.Api;
@@ -41,5 +44,19 @@ public class UserController extends BaseController {
             r.setCode(RCode.PHONE_FORMAT_ERROR.getCode()).setMsg(RCode.PHONE_FORMAT_ERROR.getMessage());
         }
         return r;
+    }
+
+
+    @ApiOperation(value = "邮箱是否注册", notes = "在注册功能中邮箱是否可以注册")
+    @GetMapping("/email/exists")
+    public R emailExists(@RequestParam("email") String email) throws InfoException {
+        if (CommonUtil.checkEmail(email)) {
+            User user = userService.queryByEmail(email);
+            if (Objects.isNull(user)) {
+                return R.ok().setMsg("可以注册");
+            }
+            throw new InfoException(CommonUtil.generateJSON(RCode.EMAIL_EXISTS.getCode(), RCode.EMAIL_EXISTS.getMessage()));
+        }
+        throw new InfoException(CommonUtil.generateJSON(ERRORCode.EMAIL_CHECK_ERROR.getCode(), ERRORCode.EMAIL_CHECK_ERROR.getMessage()));
     }
 }

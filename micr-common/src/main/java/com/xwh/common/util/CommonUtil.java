@@ -1,5 +1,11 @@
 package com.xwh.common.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.xwh.common.enums.ERRORCode;
+import com.xwh.common.exception.InfoException;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -36,12 +42,26 @@ public class CommonUtil {
     }
 
     // 手机号格式
-
     public static boolean checkPhone(String phone) {
-        if (Objects.nonNull(phone)){
+        if (Objects.nonNull(phone)) {
             return Pattern.matches("^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$", phone);
-        }else {
-            return false;
         }
+        return false;
+    }
+
+    // 邮箱格式
+    public static boolean checkEmail(String email){
+        if (StringUtils.isNotBlank(email)) {
+            return Pattern.matches("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$", email);
+        }
+        throw new InfoException(generateJSON(ERRORCode.EMAIL_NULL_ERROR.getCode(),ERRORCode.EMAIL_NULL_ERROR.getMessage()));
+    }
+
+    // 生产json串
+    public static String generateJSON(Integer code, String message) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", code);
+        jsonObject.put("message", message);
+        return JSON.toJSONString(jsonObject);
     }
 }

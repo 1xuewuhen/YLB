@@ -3,6 +3,8 @@ package com.xwh.dataservice.service;
 import com.alibaba.fastjson.JSON;
 import com.xwh.api.model.User;
 import com.xwh.api.service.UserService;
+import com.xwh.common.constants.RedisKey;
+import com.xwh.common.exception.InfoException;
 import com.xwh.common.util.CommonUtil;
 import com.xwh.dataservice.mapper.UserMapper;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -32,11 +34,26 @@ public class UserServiceImpl implements UserService {
     public User queryByPhone(String phone) {
         User user = null;
         if (CommonUtil.checkPhone(phone)) {
-            user = JSON.parseObject(stringRedisTemplate.opsForValue().get(phone), User.class);
+            user = JSON.parseObject(stringRedisTemplate.opsForValue().get(RedisKey.KEY_PHONE_USER + phone), User.class);
             if (Objects.isNull(user)) {
                 user = userMapper.selectByPhone(phone);
-                if (Objects.nonNull(user)){
-                    stringRedisTemplate.opsForValue().set(phone, JSON.toJSONString(user),10L, TimeUnit.MINUTES);
+                if (Objects.nonNull(user)) {
+                    stringRedisTemplate.opsForValue().set(RedisKey.KEY_PHONE_USER + phone, JSON.toJSONString(user), 10L, TimeUnit.MINUTES);
+                }
+            }
+        }
+        return user;
+    }
+
+    @Override
+    public User queryByEmail(String email) {
+        User user = null;
+        if (CommonUtil.checkEmail(email)) {
+            user = JSON.parseObject(stringRedisTemplate.opsForValue().get(RedisKey.KEY_EMAIL_USER + email), User.class);
+            if (Objects.isNull(user)){
+                user = userMapper.selectByEmail(email);
+                if (Objects.nonNull(user)) {
+                    stringRedisTemplate.opsForValue().set(RedisKey.KEY_EMAIL_USER + email, JSON.toJSONString(user), 10L, TimeUnit.MINUTES);
                 }
             }
         }
