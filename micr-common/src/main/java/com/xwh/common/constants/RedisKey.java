@@ -8,9 +8,9 @@ package com.xwh.common.constants;
 public interface RedisKey {
     // 投资排行榜
     String KEY_INVEST_RANK = "INVEST:RANK";
-    String KEY_PHONE_USER = "PHONE:USER";
-    String KEY_EMAIL_USER = "PHONE:USER";
+    String KEY_PHONE_USER = "PHONE:USER:";
+    String KEY_EMAIL_USER = "EMAIL:USER:";
 
     //注册时短信验证码
-    String KEY_EMAIL_CODE_REG = "EMAIL:REG";
+    String KEY_EMAIL_CODE_REG = "EMAIL:REG:";
 }

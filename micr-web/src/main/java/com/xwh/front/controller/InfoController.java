@@ -1,6 +1,6 @@
 package com.xwh.front.controller;
 
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
+import com.xwh.common.constants.RedisKey;
 import com.xwh.common.enums.ERRORCode;
 import com.xwh.common.exception.InfoException;
 import com.xwh.common.util.CommonUtil;
@@ -29,6 +29,10 @@ public class InfoController extends BaseController {
     public R sendEmail(@RequestParam("email") String email) throws Exception {
         if (!CommonUtil.checkEmail(email)) {
             throw new InfoException(CommonUtil.generateJSON(ERRORCode.EMAIL_CHECK_ERROR.getCode(), ERRORCode.EMAIL_CHECK_ERROR.getMessage()));
+        }
+        String key = RedisKey.KEY_EMAIL_CODE_REG + email;
+        if (Boolean.TRUE.equals(stringRedisTemplate.hasKey(key))) {
+            throw new InfoException(CommonUtil.generateJSON(ERRORCode.EMAIL_CODE_CAN_USE.getCode(), ERRORCode.EMAIL_CODE_CAN_USE.getMessage()));
         }
         infoService.sendEmail(email);
         return R.ok();

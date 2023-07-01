@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="com.xwh.api.model.User">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="login_password" jdbcType="VARCHAR" property="loginPassword"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="id_card" jdbcType="VARCHAR" property="idCard"/>
