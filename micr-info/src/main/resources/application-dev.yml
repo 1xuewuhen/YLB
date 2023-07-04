@@ -4,8 +4,8 @@ server:
 spring:
   mail:
     host: smtp.qq.com
-    username: xxxxxxxxxxx@qq.com
-    password: xxxxxxxxxxx
+    username: xxxxxxxxxxxx@qq.com
+    password: xxxxxxxxxxxxxxxx
     port: 587
     default-encoding: UTF-8
 
@@ -29,3 +29,11 @@ info:
   email:
     subject: 鳕鱼神教
     context: 【鳕鱼神教】你的验证码是：{code}，三分种有效，请勿泄露个他人
+
+
+custom:
+  thread:
+    corePoolSize: 5
+    maximumPoolSize: 20
+    keepAliveTime: 30
+    capacity: 10000
