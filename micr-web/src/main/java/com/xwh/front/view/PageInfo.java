@@ -14,6 +14,7 @@ import lombok.Data;
 @Builder
 public class PageInfo {
     // 页号
+
     private Integer pageNo;
     // 每页大小
     private Integer pageSize;
