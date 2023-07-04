@@ -26,6 +26,7 @@ public class BaseController {
     @DubboReference(interfaceClass = ProductService.class, version = "1.0")
     protected ProductService productService;
 
+    // redis服务
     @Resource
     protected StringRedisTemplate stringRedisTemplate;
 
