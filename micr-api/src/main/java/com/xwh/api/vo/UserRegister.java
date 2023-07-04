@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -29,9 +30,10 @@ public class UserRegister implements Serializable {
     private String email;
 
     @NotEmpty(message = "密码不能为空", groups = UserGroup.Register.class)
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[^\\da-zA-Z\\s]).{1,16}$", groups = UserGroup.Register.class)
+    @Pattern(message = "密码不符合格式", regexp = "^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[^\\da-zA-Z\\s]).{1,16}$", groups = UserGroup.Register.class)
     private String password;
 
+    @Length(min = 4, max = 6, message = "验证码是在4-6位之间", groups = UserGroup.Register.class)
     @NotEmpty(message = "验证码不能为空", groups = UserGroup.Register.class)
     private String code;
 }
