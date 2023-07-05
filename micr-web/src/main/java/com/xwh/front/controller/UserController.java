@@ -47,10 +47,7 @@ public class UserController extends BaseController {
         if (Objects.nonNull(user)){
             return R.error().setCode(RCode.EMAIL_EXISTS.getCode()).setMsg(RCode.EMAIL_EXISTS.getMessage());
         }
-        User u = new User();
-        u.setEmail(userRegister.getEmail());
-        u.setLoginPassword(userRegister.getPassword());
-//        userService.save(u);
+        userService.userRegister(userRegister);
         return R.ok();
     }
 

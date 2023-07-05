@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import java.util.Date;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -50,6 +51,9 @@ public class InfoServiceImpl implements InfoService {
     public void sendEmail(String toEmail) {
         if (!CommonUtil.checkEmail(toEmail)) {
             throw new InfoException(CommonUtil.generateJSON(ERRORCode.EMAIL_NULL_ERROR.getCode(), ERRORCode.EMAIL_NULL_ERROR.getMessage()));
+        }
+        if (Objects.nonNull(stringRedisTemplate.boundValueOps(RedisKey.KEY_EMAIL_CODE_REG + toEmail).get())) {
+            throw new InfoException(CommonUtil.generateJSON(ERRORCode.EMAIL_CODE_CAN_USE.getCode(), ERRORCode.EMAIL_CODE_CAN_USE.getMessage()));
         }
         CompletableFuture.runAsync(() -> {
             try {

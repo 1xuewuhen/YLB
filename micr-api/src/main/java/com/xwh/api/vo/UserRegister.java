@@ -30,7 +30,9 @@ public class UserRegister implements Serializable {
     private String email;
 
     @NotEmpty(message = "密码不能为空", groups = UserGroup.Register.class)
-    @Pattern(message = "密码不符合格式", regexp = "^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[^\\da-zA-Z\\s]).{1,16}$", groups = UserGroup.Register.class)
+//    @Pattern(message = "密码不符合格式", regexp = "^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[^\\da-zA-Z\\s]).{1,16}$", groups = UserGroup.Register.class)
+//    @Pattern(message = "密码长度不符合32位",regexp = "^[a-zA-Z0-9]{32,32}$",groups = UserGroup.Register.class)
+    @Length(message = "密码长度不符合32位", min = 32, max = 32, groups = UserGroup.Register.class)
     private String password;
 
     @Length(min = 4, max = 6, message = "验证码是在4-6位之间", groups = UserGroup.Register.class)

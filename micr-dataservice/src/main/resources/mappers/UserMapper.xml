@@ -78,6 +78,9 @@
             <if test="headerImage != null">
                 header_image,
             </if>
+            <if test="email != null">
+                email,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -104,7 +107,13 @@
             <if test="headerImage != null">
                 #{headerImage,jdbcType=VARCHAR},
             </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
         </trim>
+        <selectKey keyColumn="newID" keyProperty="id" resultType="int" order="AFTER">
+            select LAST_INSERT_ID() as newId
+        </selectKey>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.xwh.api.model.User">
         update u_user

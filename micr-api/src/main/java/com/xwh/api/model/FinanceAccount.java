@@ -1,8 +1,13 @@
 package com.xwh.api.model;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+@Data
+@Accessors(chain = true)
 public class FinanceAccount implements Serializable {
     private Integer id;
 
@@ -10,27 +15,4 @@ public class FinanceAccount implements Serializable {
 
     private BigDecimal availableMoney;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
-
-    public BigDecimal getAvailableMoney() {
-        return availableMoney;
-    }
-
-    public void setAvailableMoney(BigDecimal availableMoney) {
-        this.availableMoney = availableMoney;
-    }
 }
