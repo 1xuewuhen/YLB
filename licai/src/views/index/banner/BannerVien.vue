@@ -18,11 +18,11 @@
     <div class="banner-abs">
       <div class="banner-abs-box">
         <div class="banner-abs-title">动力金融网历史年化收益率</div>
-        <b>{{ platInfo.historyAvgRate }}<i>%</i></b>
+        <b>{{ platInfoStore.platInfo.historyAvgRate }}<i>%</i></b>
         <p>平台用户数</p>
-        <span>{{ platInfo.registerUsers }}<i>位</i></span>
+        <span>{{ platInfoStore.platInfo.registerUsers }}<i>位</i></span>
         <p class="banner-abs-border">累计成交金额</p>
-        <span>{{ platInfo.sumBigMoney }}<i>元</i></span>
+        <span>{{ platInfoStore.platInfo.sumBigMoney }}<i>元</i></span>
       </div>
     </div>
   </div>
@@ -54,18 +54,8 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
-import {PlatInfoType} from '@/interface/typeInterface'
-import HttpUtil from "@/api";
-
-const platInfo = ref<PlatInfoType>({})
-onMounted(() => {
-  HttpUtil.get('/v1/plat/info').then(value => {
-    if (value.data.code == 1000) {
-      platInfo.value = value.data.data
-    }
-  })
-})
+import {PlatInfoStore} from '@/stores'
+const platInfoStore = PlatInfoStore()
 
 
 </script>

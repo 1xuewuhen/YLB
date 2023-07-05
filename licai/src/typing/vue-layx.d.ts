@@ -4,6 +4,7 @@ declare module 'vue-layx'{
     }
     interface config {
         dialogIcon:string
+        position?:string
     }
     const layx:Layx
     export default layx

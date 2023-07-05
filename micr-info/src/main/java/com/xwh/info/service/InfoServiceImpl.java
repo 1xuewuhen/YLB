@@ -75,7 +75,7 @@ public class InfoServiceImpl implements InfoService {
                 mimeMessageHelper.setSentDate(new Date());
                 //发送邮件
                 javaMailSender.send(mimeMessageHelper.getMimeMessage());
-                stringRedisTemplate.boundValueOps(RedisKey.KEY_EMAIL_CODE_REG + toEmail).set(randomAlphanumeric, 3, TimeUnit.MINUTES);
+                stringRedisTemplate.boundValueOps(RedisKey.KEY_EMAIL_CODE_REG + toEmail).set(randomAlphanumeric, 1, TimeUnit.MINUTES);
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             }

@@ -31,7 +31,7 @@
     </select>
     <!--  利率平均值-->
     <select id="selectAvgRate" resultType="java.math.BigDecimal">
-        select round(avg(rate)) as avgRate
+        select round(avg(rate),2) as avgRate
         from b_product_info
     </select>
     <!--    -->

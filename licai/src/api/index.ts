@@ -10,11 +10,12 @@ class HttpUtil {
         })
     }
 
-    static async post(url: string, data?: {}) {
+    static async post(url: string, data?: {}, param?: {}) {
         return await requests({
             url: url,
             method: 'post',
-            data: data
+            data: data,
+            params: param
         })
     }
 }
