@@ -70,8 +70,8 @@ const bidInfoList = ref<BidInfoListType[]>([
   }
 ])
 const route = useRoute()
-onMounted(() => {
-  HttpUtil.get('/v1/product/info', {
+onMounted(async () => {
+  await HttpUtil.get('/v1/product/info', {
     productId: route.query.productId
   }).then(value => {
     if (value.data.code == 1000) {

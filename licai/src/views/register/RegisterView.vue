@@ -41,7 +41,8 @@
           </div>
         </form>
         <div class="login-skip">
-          已有账号？ <router-link to="/login">登录</router-link>
+          已有账号？
+          <router-link to="/login">登录</router-link>
         </div>
       </div>
 
@@ -72,104 +73,99 @@ const userRegister = reactive<{
 let codeText = ref<string>('获取验证码')
 let isSend = ref<boolean>(false)
 let agree = ref<boolean>(false)
-const checkUserRegister = (type: number) => {
+let sign = ref<boolean>(true)
+const checkUserRegister = async (type: number) => {
   switch (type) {
     case 1: {
       const exp = new RegExp("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$");
-      let flag = true;
       if (!exp.test(userRegister.email)) {
         alert("邮箱格式不对，请输入正确的邮箱")
-        return false
+        sign.value = false
+        return
       }
-      HttpUtil.get('/v1/user/email/exists', {
+      await HttpUtil.get('/v1/user/email/exists', {
         email: userRegister.email
       }).then(value => {
         if (value.data.code != 1000) {
-          flag = false
+          sign.value = false
           alert(value.data.msg)
         }
       })
-      return flag
+      break
     }
     case 2: {
       const exp = new RegExp("^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[^\\da-zA-Z\\s]).{8,16}$")
       if (!exp.test(userRegister.password)) {
         alert('密码不符合要求，密码应在8-16位，包含字母大小写，数字，特殊字符')
-        return false;
+        sign.value = false
+        return
       }
-      return true
+      break
     }
     case 3: {
       if (userRegister.code == '' || userRegister.code == undefined) {
         alert("验证码不能为空")
-        return false;
+        sign.value = false
+        return
       }
       if (userRegister.code.length != 4) {
         alert("验证码是4位码")
-        return false;
+        sign.value = false
+        return;
       }
-      return true
+      break
     }
   }
 }
-const requestEmailCode = () => {
-  console.log(checkUserRegister(1))
-  if (!checkUserRegister(1)) {
-    return
+const requestEmailCode = async () => {
+  await checkUserRegister(1)
+  await checkUserRegister(2)
+  if (sign.value) {
+    if (!isSend.value) {
+      // 倒计时处理 默认60
+      let second = 60
+      const interval = setInterval(() => {
+        isSend.value = true
+        if (second <= 1) {
+          codeText.value = '获取验证码'
+          clearInterval(interval)
+          isSend.value = false
+          sign.value = true
+        } else {
+          second = second - 1
+          codeText.value = second + "秒后重新获取"
+        }
+      }, 1000);
+      await HttpUtil.get('/v1/email/code/register', {
+        email: userRegister.email
+      }).then(value => {
+        if (value.data.code == 1000) {
+          layx.msg('发送成功', {dialogIcon: 'info'})
+        } else {
+          alert(value.data.msg)
+        }
+      })
+    }
   }
-  if (!checkUserRegister(2)) {
-    return;
-  }
-  // console.log(isSend.value)
-  if (!isSend.value) {
-    // 倒计时处理 默认60
-    let second = 60
-    const interval = setInterval(() => {
-      isSend.value = true
-      if (second <= 1) {
-        codeText.value = '获取验证码'
-        clearInterval(interval)
-        isSend.value = false
-      } else {
-        second = second - 1
-        codeText.value = second + "秒后重新获取"
-      }
-    }, 1000);
-  }
-  // HttpUtil.get('/v1/email/code/register', {
-  //   email: userRegister.email
-  // }).then(value => {
-  //   if (value.data.code == 1000) {
-  //     layx.msg('发送成功', {dialogIcon: 'info'})
-  //   } else {
-  //     alert(value.data.msg)
-  //   }
-  // })
 }
-const requestUserRegister = () => {
+const requestUserRegister = async () => {
   if (agree.value) {
-    console.log(checkUserRegister(1),1)
-    console.log(checkUserRegister(2),2)
-    console.log(checkUserRegister(3),3)
-    // if (checkUserRegister(1)) {
-    //   return;
-    // }
-    // if (checkUserRegister(2)) {
-    //   return;
-    // }
-    // if (checkUserRegister(3)) {
-    //   return;
-    // }
-    // userRegister.password = md5(userRegister.password)
-    // HttpUtil.post('/v1/user/register',
-    //     userRegister).then(value => {
-    //   if (value.data.code == 1000) {
-    //     router.push({
-    //       path:'/login'
-    //     })
-    //   }
-    // })
-    // userRegister.password = 'www.520.COM'
+    await checkUserRegister(1)
+    await checkUserRegister(2)
+    await checkUserRegister(3)
+    if (sign.value) {
+      userRegister.password = md5(userRegister.password)
+      await HttpUtil.post('/v1/user/register',
+          userRegister).then(value => {
+        if (value.data.code == 1000) {
+          router.push({
+            path: '/login'
+          })
+        }
+      })
+      userRegister.password = 'www.520.COM'
+      sign.value = true
+    }
   } else {
     alert('必须同意协议')
     return

@@ -23,7 +23,9 @@
             <span>余利可投资金额</span>
           </li>
         </ul>
-        <router-link :to="{path:'/page/product/detail',query:{productId:noviceTreasure.id}}" class="new-user-btn">立即投资</router-link>
+        <router-link :to="{path:'/page/product/detail',query:{productId:noviceTreasure.id}}" class="new-user-btn">
+          立即投资
+        </router-link>
       </div>
       <span class="new-tag">新用户专享</span>
     </div>
@@ -35,12 +37,12 @@
 <script setup lang="ts">
 import {ref, onMounted} from "vue";
 import SpecificProductView from "./specificProduct/SpecificProductView.vue";
-import {ProductType,Product} from '@/interface/typeInterface'
+import {ProductType, Product} from '@/interface/typeInterface'
 import HttpUtil from "@/api";
 
 const product = ref<ProductType>({noviceTreasure: [], preferred: [], scatterLabel: []})
-onMounted(() => {
-  HttpUtil.get('/v1/product/index').then(value => {
+onMounted(async () => {
+  await HttpUtil.get('/v1/product/index').then(value => {
     if (value.data.code == 1000) {
       product.value = value.data.data
     }

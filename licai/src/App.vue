@@ -6,8 +6,8 @@ import {PlatInfoStore} from '@/stores'
 import {onMounted} from "vue";
 
 const platInfoStore = PlatInfoStore()
-onMounted(() => {
-  platInfoStore.getPlatInfo()
+onMounted(async () => {
+  await platInfoStore.getPlatInfo()
 })
 </script>
 

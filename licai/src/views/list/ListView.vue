@@ -61,16 +61,16 @@ const page = ref<PageType>({
   totalPage: 0,
   totalRecord: 0
 })
-onMounted(() => {
-  initPage(route.query.pType as number,1)
-  HttpUtil.get('/v1/invest/rank').then(value => {
+onMounted(async () => {
+  await initPage(route.query.pType as number, 1)
+  await HttpUtil.get('/v1/invest/rank').then(value => {
     if (value.data.code == 1000) {
       rank.value = value.data.list
     }
   })
 })
 watch([route], (value, oldValue, onCleanup) => {
-  initPage(value[0].query.pType as number,1)
+  initPage(value[0].query.pType as number, 1)
   // console.log(value[0].query.pType)
   // console.log(oldValue[0].query.pType)
 }, {
@@ -81,8 +81,8 @@ const getPageNo = (pageNo: number) => {
   initPage(route.query.pType as number, pageNo)
 
 }
-const initPage = (pType: number | string, pageNo: number) => {
-  HttpUtil.get('/v1/product/list', {pType: pType, pageNo: pageNo, pageSize: 9}).then(value => {
+const initPage = async (pType: number | string, pageNo: number) => {
+  await HttpUtil.get('/v1/product/list', {pType: pType, pageNo: pageNo, pageSize: 9}).then(value => {
     if (value.data.code == 1000) {
       product.value = value.data.list
       page.value = value.data.page
