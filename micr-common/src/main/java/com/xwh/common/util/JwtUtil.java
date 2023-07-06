@@ -23,6 +23,7 @@ public class JwtUtil {
 
     private static SecretKey secretKey = null;
     private static String time = "";
+    private static String issuer = "";
 
     /**
      *     // 生成uuid
@@ -38,6 +39,7 @@ public class JwtUtil {
             String key = properties.getProperty("jwt.key", "f24e38539d0d4386ab254e3310ffb508");
             time = properties.getProperty("jwt.expTime", "20");
             secretKey = Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8));
+            issuer = properties.getProperty("jwt.issuer","血狱神教");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,6 +53,7 @@ public class JwtUtil {
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .setExpiration(DateUtils.addMinutes(curDate, Integer.parseInt(time)))
                 .setIssuedAt(curDate)
+                .setIssuer(issuer)
                 .setId(UUID.randomUUID().toString().replaceAll("-", ""))
                 .addClaims(map)
                 .compact();

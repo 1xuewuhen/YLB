@@ -27,4 +27,10 @@ dubbo:
     retries: 0
     check: false
 
+aliyun:
+  real-name:
+    host: http://smrz1111.market.alicloudapi.com
+    path: /communication/personal/1882
+    #appcode
+    appcode: xxxxxxxxxxxxxxxxx
 
