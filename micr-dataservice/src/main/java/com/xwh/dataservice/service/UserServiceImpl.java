@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
         if (Objects.isNull(userMapper.selectByEmail(userRegister.getEmail()))) {
             // 二次加密密码数据，给原始数据加盐(salt)
             String md5Hex = DigestUtils.md5Hex(userRegister.getPassword() + passwordSalt);
-            User user = new User().setEmail(userRegister.getEmail()).setLoginPassword(md5Hex).setAddTime(new Date()).setName("鳕鱼神教弟子" + UUID.randomUUID().toString().substring(0, 5));
+            User user = new User().setEmail(userRegister.getEmail()).setLoginPassword(md5Hex).setAddTime(new Date());
             userMapper.insertSelective(user);
             FinanceAccount account = new FinanceAccount().setUid(user.getId()).setAvailableMoney(BigDecimal.ZERO);
             financeAccountMapper.insertSelective(account);
