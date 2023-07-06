@@ -8,5 +8,5 @@ package com.xwh.api.service.info;
 public interface InfoService {
 
     // 发送邮件
-    void sendEmail(String toEmail) throws Exception;
+    void sendEmail(String toEmail,Integer sign) throws Exception;
 }

@@ -12,25 +12,25 @@
         <h3 class="login-title">用户注册</h3>
         <form action="javascript:void (0)" id="register_Submit">
           <div class="alert-input">
-            <input type="text" class="form-border user-num my-div-input" name="mobile"
+            <input type="text" class="form-border user-num " name="mobile"
                    v-model="userRegister.email"
                    @blur="checkUserRegister(1)"
                    placeholder="请输入邮箱">
-            <!--            <p class="prompt_num" v-show="typeNum == 1">{{ errMessage }}</p>-->
+            <p class="prompt_num"></p>
             <input type="password"
                    @blur="checkUserRegister(2)"
                    v-model="userRegister.password"
-                   placeholder="请输入6-20位英文和数字混合密码" class="form-border user-pass my-div-input"
+                   placeholder="请输入6-20位英文和数字混合密码" class="form-border user-pass "
                    autocomplete name="password">
-            <!--            <p class="prompt_pass" v-show="typeNum==2">{{ errMessage }}</p>-->
-            <div class="form-yzm form-border my-div-input">
+            <p class="prompt_pass"></p>
+            <div class="form-yzm form-border ">
               <input class="yzm-write" type="text" v-model="userRegister.code" @blur="checkUserRegister(3)" name=""
                      placeholder="输入邮箱验证码">
               <input class="yzm-send"
                      type="button" :value="codeText" @click="requestEmailCode" id="yzmBtn"
               >
             </div>
-            <!--            <p class="prompt_yan"></p>-->
+            <p class="prompt_yan"></p>
           </div>
           <div class="alert-input-agree">
             <input type="checkbox" v-model="agree"/>我已阅读并同意<a href="javascript:;"
@@ -158,6 +158,7 @@ const requestUserRegister = async () => {
       await HttpUtil.post('/v1/user/register',
           userRegister).then(value => {
         if (value.data.code == 1000) {
+          alert('注册成功，请登录')
           router.push({
             path: '/login'
           })
@@ -167,14 +168,11 @@ const requestUserRegister = async () => {
       sign.value = true
     }
   } else {
-    alert('必须同意协议')
+    alert('请阅读注册协议')
     return
   }
 
 }
 </script>
 <style scoped>
-.my-div-input {
-  margin-bottom: 8px
-}
 </style>

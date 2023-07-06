@@ -11,4 +11,8 @@ public interface YLBConstant {
     Integer PRODUCT_TYPE_PREFERRED = 1;
     Integer PRODUCT_TYPE_SCATTERLABEL = 2;
 
+    // 登录与注册的区别
+    Integer USER_LOGIN = 1;
+    Integer USER_REGISTER = 2;
+
 }

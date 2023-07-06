@@ -48,11 +48,19 @@ public class InfoServiceImpl implements InfoService {
 
     // 发送邮件
     @Override
-    public void sendEmail(String toEmail) {
+    public void sendEmail(String toEmail, Integer sign) {
+        if (sign == 1) {
+            sendEmailCode(toEmail, RedisKey.KEY_EMAIL_CODE_LOGIN);
+        } else if (sign == 2) {
+            sendEmailCode(toEmail, RedisKey.KEY_EMAIL_CODE_REG);
+        }
+    }
+
+    private void sendEmailCode(String toEmail, String key) {
         if (!CommonUtil.checkEmail(toEmail)) {
             throw new InfoException(CommonUtil.generateJSON(ERRORCode.EMAIL_NULL_ERROR.getCode(), ERRORCode.EMAIL_NULL_ERROR.getMessage()));
         }
-        if (Objects.nonNull(stringRedisTemplate.boundValueOps(RedisKey.KEY_EMAIL_CODE_REG + toEmail).get())) {
+        if (Objects.nonNull(stringRedisTemplate.boundValueOps(key + toEmail).get())) {
             throw new InfoException(CommonUtil.generateJSON(ERRORCode.EMAIL_CODE_CAN_USE.getCode(), ERRORCode.EMAIL_CODE_CAN_USE.getMessage()));
         }
         CompletableFuture.runAsync(() -> {
@@ -75,7 +83,7 @@ public class InfoServiceImpl implements InfoService {
                 mimeMessageHelper.setSentDate(new Date());
                 //发送邮件
                 javaMailSender.send(mimeMessageHelper.getMimeMessage());
-                stringRedisTemplate.boundValueOps(RedisKey.KEY_EMAIL_CODE_REG + toEmail).set(randomAlphanumeric, 1, TimeUnit.MINUTES);
+                stringRedisTemplate.boundValueOps(key + toEmail).set(randomAlphanumeric, 1, TimeUnit.MINUTES);
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             }
