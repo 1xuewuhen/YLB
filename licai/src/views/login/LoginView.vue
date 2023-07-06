@@ -48,7 +48,9 @@ import {reactive, ref} from "vue";
 import HttpUtil from "@/api";
 import layx from "vue-layx";
 import md5 from "js-md5";
+import {useRouter} from "vue-router";
 
+const router = useRouter()
 const platInfoStore = PlatInfoStore()
 const userLogin = reactive<{
   email: string,
@@ -151,7 +153,23 @@ const requestUserLogin = async () => {
     let userRegister = {...userLogin}
     await HttpUtil.post('/v1/user/email/login', userRegister).then(value => {
       if (value.data.code == 1000){
-        alert("登录成功")
+        // alert("登录成功")
+        localStorage.setItem("token","Banner " + value.data.accessToken)
+        localStorage.setItem("userinfo",JSON.stringify(value.data.data))
+
+        // 登录之后，如果name没有值，需要进入到实名认证页面
+        // 有值，进入用户中心
+        if (value.data.data.name==''){
+          router.push({
+            path:'/realName'
+          })
+        }else {
+          router.push({
+            path:'/userCenter'
+          })
+        }
+      }else {
+        alert(value.data.msg)
       }
     })
     userLogin.password = 'www.520.COM'
