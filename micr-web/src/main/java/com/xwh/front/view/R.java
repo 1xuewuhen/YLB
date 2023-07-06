@@ -19,15 +19,16 @@ import java.util.List;
 public class R {
     private Integer code;
     private String msg;
+    private String accessToken;
     private Object data;
     private List<?> list;
     private PageInfo page;
 
-    public static R ok(){
+    public static R ok() {
         return R.builder().code(RCode.SUCCESS.getCode()).msg(RCode.SUCCESS.getMessage()).build();
     }
 
-    public static R error(){
+    public static R error() {
         return R.builder().code(RCode.UN_KNOW.getCode()).msg(RCode.UN_KNOW.getMessage()).build();
     }
 }

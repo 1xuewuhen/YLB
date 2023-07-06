@@ -8,6 +8,7 @@ import com.xwh.common.enums.ERRORCode;
 import com.xwh.common.enums.RCode;
 import com.xwh.common.exception.InfoException;
 import com.xwh.common.util.CommonUtil;
+import com.xwh.common.util.JwtUtil;
 import com.xwh.front.view.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -17,6 +18,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -29,6 +32,29 @@ import java.util.Objects;
 @RequestMapping("/v1/user")
 public class UserController extends BaseController {
 
+
+    @ApiOperation(value = "用户登录", notes = "使用邮箱登录")
+    @PostMapping("/email/login")
+    public R userLogin(@Validated(value = UserGroup.Login.class) @RequestBody UserRegister userRegister) throws Exception {
+        String redisKeyLogin = RedisKey.KEY_EMAIL_CODE_LOGIN + userRegister.getEmail();
+        String code = stringRedisTemplate.boundValueOps(redisKeyLogin).get();
+        if (!userRegister.getCode().equals(code)) {
+            return R.error().setCode(ERRORCode.EMAIL_CODE_ERROR.getCode()).setMsg(ERRORCode.EMAIL_CODE_ERROR.getMessage());
+        }
+        User user = userService.userLogin(userRegister);
+        if (Objects.nonNull(user)) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("userId", user.getId());
+            String token = JwtUtil.createJwt(map);
+            Map<String, Object> userInfo = new HashMap<>();
+            userInfo.put("uid", user.getId());
+            userInfo.put("email", user.getEmail());
+            userInfo.put("name", user.getName());
+            return R.ok().setAccessToken(token).setData(userInfo);
+        }
+        return R.error().setCode(ERRORCode.SYSTEM_ERROR.getCode()).setMsg(ERRORCode.SYSTEM_ERROR.getMessage());
+    }
+
     /**
      * @description: 邮箱注册用户
      * @author 陈方银
@@ -36,15 +62,15 @@ public class UserController extends BaseController {
      * @version 1.0
      */
     @ApiOperation(value = "邮箱注册用户", notes = "通过邮箱注册用户")
-    @PostMapping("/register")
+    @PostMapping("/email/register")
     public R userRegister(@Validated(value = UserGroup.Register.class) @RequestBody UserRegister userRegister) {
         String redisKeyRegister = RedisKey.KEY_EMAIL_CODE_REG + userRegister.getEmail();
         String code = stringRedisTemplate.boundValueOps(redisKeyRegister).get();
-        if (!userRegister.getCode().equals(code)){
+        if (!userRegister.getCode().equals(code)) {
             return R.error().setCode(ERRORCode.EMAIL_CODE_ERROR.getCode()).setMsg(ERRORCode.EMAIL_CODE_ERROR.getMessage());
         }
         User user = userService.queryByEmail(userRegister.getEmail());
-        if (Objects.nonNull(user)){
+        if (Objects.nonNull(user)) {
             return R.error().setCode(RCode.EMAIL_EXISTS.getCode()).setMsg(RCode.EMAIL_EXISTS.getMessage());
         }
         userService.userRegister(userRegister);

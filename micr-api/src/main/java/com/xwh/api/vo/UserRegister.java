@@ -25,17 +25,17 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class UserRegister implements Serializable {
 
-    @NotEmpty(message = "邮箱不能为空", groups = UserGroup.Register.class)
-    @Email(message = "邮箱校验失败", regexp = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$", groups = UserGroup.Register.class)
+    @NotEmpty(message = "邮箱不能为空", groups = {UserGroup.Register.class,UserGroup.Login.class})
+    @Email(message = "邮箱校验失败", regexp = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$", groups = {UserGroup.Register.class,UserGroup.Login.class})
     private String email;
 
-    @NotEmpty(message = "密码不能为空", groups = UserGroup.Register.class)
+    @NotEmpty(message = "密码不能为空",groups = {UserGroup.Register.class,UserGroup.Login.class})
 //    @Pattern(message = "密码不符合格式", regexp = "^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[^\\da-zA-Z\\s]).{1,16}$", groups = UserGroup.Register.class)
 //    @Pattern(message = "密码长度不符合32位",regexp = "^[a-zA-Z0-9]{32,32}$",groups = UserGroup.Register.class)
-    @Length(message = "密码长度不符合32位", min = 32, max = 32, groups = UserGroup.Register.class)
+    @Length(message = "密码长度不符合32位", min = 32, max = 32, groups = {UserGroup.Register.class,UserGroup.Login.class})
     private String password;
 
-    @Length(min = 4, max = 6, message = "验证码是在4-6位之间", groups = UserGroup.Register.class)
+    @Length(min = 4, max = 6, message = "验证码是在4-6位之间", groups = {UserGroup.Register.class,UserGroup.Login.class})
     @NotEmpty(message = "验证码不能为空", groups = UserGroup.Register.class)
     private String code;
 }

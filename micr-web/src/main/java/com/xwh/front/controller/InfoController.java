@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 /**
  * @author 陈方银
@@ -27,25 +28,33 @@ import javax.servlet.http.HttpServletRequest;
 public class InfoController extends BaseController {
 
     // 发送邮件
-    @ApiOperation(value = "发送验证码", notes = "通过邮箱发送验证")
+    @ApiOperation(value = "发送验证码", notes = "通过邮箱发送验证", tags = {"注册验证码", "登录验证码"})
     @GetMapping(value = {"/email/code/register", "/email/code/login"})
     public R sendEmail(HttpServletRequest request, @RequestParam("email") String email) throws Exception {
         if (!CommonUtil.checkEmail(email)) {
             throw new InfoException(CommonUtil.generateJSON(ERRORCode.EMAIL_CHECK_ERROR.getCode(), ERRORCode.EMAIL_CHECK_ERROR.getMessage()));
         }
         String key = "";
-        if ("/api/v1/email/code/login".equals(request.getRequestURI())) {
-            key = RedisKey.KEY_EMAIL_CODE_LOGIN + email;
-            if (Boolean.TRUE.equals(stringRedisTemplate.hasKey(key))) {
-                throw new InfoException(CommonUtil.generateJSON(ERRORCode.EMAIL_CODE_CAN_USE.getCode(), ERRORCode.EMAIL_CODE_CAN_USE.getMessage()));
+        switch (request.getRequestURI()) {
+            case "/api/v1/email/code/login": {
+                key = RedisKey.KEY_EMAIL_CODE_LOGIN + email;
+                if (Boolean.TRUE.equals(stringRedisTemplate.hasKey(key))) {
+                    throw new InfoException(CommonUtil.generateJSON(ERRORCode.EMAIL_CODE_CAN_USE.getCode(), ERRORCode.EMAIL_CODE_CAN_USE.getMessage()));
+                }
+                infoService.sendEmail(email, YLBConstant.USER_LOGIN);
+                break;
             }
-            infoService.sendEmail(email, YLBConstant.USER_LOGIN);
-        } else if ("/api/v1/email/code/register".equals(request.getRequestURI())) {
-            key = RedisKey.KEY_EMAIL_CODE_REG + email;
-            if (Boolean.TRUE.equals(stringRedisTemplate.hasKey(key))) {
-                throw new InfoException(CommonUtil.generateJSON(ERRORCode.EMAIL_CODE_CAN_USE.getCode(), ERRORCode.EMAIL_CODE_CAN_USE.getMessage()));
+            case "/api/v1/email/code/register": {
+                key = RedisKey.KEY_EMAIL_CODE_REG + email;
+                if (Boolean.TRUE.equals(stringRedisTemplate.hasKey(key))) {
+                    throw new InfoException(CommonUtil.generateJSON(ERRORCode.EMAIL_CODE_CAN_USE.getCode(), ERRORCode.EMAIL_CODE_CAN_USE.getMessage()));
+                }
+                infoService.sendEmail(email, YLBConstant.USER_REGISTER);
+                break;
             }
-            infoService.sendEmail(email,YLBConstant.USER_REGISTER);
+            default: {
+                return R.error();
+            }
         }
         return R.ok();
     }

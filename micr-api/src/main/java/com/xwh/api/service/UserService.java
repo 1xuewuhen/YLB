@@ -17,4 +17,7 @@ public interface UserService {
 
     // 用户注册
     void userRegister(UserRegister u);
+
+    // 用户登录
+    User userLogin(UserRegister userRegister);
 }

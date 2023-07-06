@@ -49,10 +49,17 @@ public class InfoServiceImpl implements InfoService {
     // 发送邮件
     @Override
     public void sendEmail(String toEmail, Integer sign) {
-        if (sign == 1) {
-            sendEmailCode(toEmail, RedisKey.KEY_EMAIL_CODE_LOGIN);
-        } else if (sign == 2) {
-            sendEmailCode(toEmail, RedisKey.KEY_EMAIL_CODE_REG);
+        switch (sign) {
+            case 1: {
+                sendEmailCode(toEmail, RedisKey.KEY_EMAIL_CODE_LOGIN);
+                break;
+            }
+            case 2: {
+                sendEmailCode(toEmail, RedisKey.KEY_EMAIL_CODE_REG);
+                break;
+            }
+            default: {
+            }
         }
     }
 

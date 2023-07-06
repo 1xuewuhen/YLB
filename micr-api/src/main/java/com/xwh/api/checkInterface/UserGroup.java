@@ -7,4 +7,5 @@ package com.xwh.api.checkInterface;
  */
 public interface UserGroup {
     interface Register{}
+    interface Login{}
 }

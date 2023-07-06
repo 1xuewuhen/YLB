@@ -44,7 +44,7 @@ public class ExceptionHandle {
         return R.error().setCode(ERRORCode.SYSTEM_ERROR.getCode()).setMsg(ERRORCode.SYSTEM_ERROR.getMessage());
     }
 
-    @ExceptionHandler(value = {RuntimeException.class})
+    @ExceptionHandler(value = {RuntimeException.class, Exception.class})
     public R MAXException(RuntimeException e) {
         return R.builder().code(ERRORCode.SYSTEM_ERROR.getCode()).msg(e.getMessage()).build();
     }

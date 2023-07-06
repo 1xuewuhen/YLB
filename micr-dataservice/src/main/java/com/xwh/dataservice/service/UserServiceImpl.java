@@ -6,8 +6,10 @@ import com.xwh.api.model.User;
 import com.xwh.api.service.UserService;
 import com.xwh.api.vo.UserRegister;
 import com.xwh.common.constants.RedisKey;
+import com.xwh.common.enums.ERRORCode;
 import com.xwh.common.enums.RCode;
 import com.xwh.common.exception.InfoException;
+import com.xwh.common.exception.UserException;
 import com.xwh.common.util.CommonUtil;
 import com.xwh.dataservice.mapper.FinanceAccountMapper;
 import com.xwh.dataservice.mapper.UserMapper;
@@ -21,6 +23,7 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -83,12 +86,31 @@ public class UserServiceImpl implements UserService {
         if (Objects.isNull(userMapper.selectByEmail(userRegister.getEmail()))) {
             // 二次加密密码数据，给原始数据加盐(salt)
             String md5Hex = DigestUtils.md5Hex(userRegister.getPassword() + passwordSalt);
-            User user = new User().setEmail(userRegister.getEmail()).setLoginPassword(md5Hex).setAddTime(new Date());
+            User user = new User().setEmail(userRegister.getEmail()).setLoginPassword(md5Hex).setAddTime(new Date()).setName("鳕鱼神教弟子" + UUID.randomUUID().toString().substring(0, 5));
             userMapper.insertSelective(user);
-            FinanceAccount account = new FinanceAccount().setUid(user.getId()).setAvailableMoney(new BigDecimal("0"));
+            FinanceAccount account = new FinanceAccount().setUid(user.getId()).setAvailableMoney(BigDecimal.ZERO);
             financeAccountMapper.insertSelective(account);
             return;
         }
         throw new InfoException(CommonUtil.generateJSON(RCode.EMAIL_EXISTS.getCode(), RCode.EMAIL_EXISTS.getMessage()));
+    }
+
+    // 用户登录
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public User userLogin(UserRegister userRegister) {
+//        User user = new User().setEmail(userRegister.getEmail()).setLoginPassword(userRegister.getPassword());
+        User user = queryByEmail(userRegister.getEmail());
+        if (Objects.isNull(user)) {
+            throw new UserException(CommonUtil.generateJSON(ERRORCode.EMAIL_NO_REGISTER.getCode(), ERRORCode.EMAIL_NO_REGISTER.getMessage()));
+        }
+        String md5Hex = DigestUtils.md5Hex(userRegister.getPassword() + passwordSalt);
+        if (user.getLoginPassword().equals(md5Hex)) {
+            user.setLastLoginTime(new Date());
+            // TODO redis 似乎可以不用同步更新
+            userMapper.updateByPrimaryKeySelective(user);
+            return user;
+        }
+        throw new UserException(CommonUtil.generateJSON(ERRORCode.EMAIL_PASSWORD_ERROR.getCode(), ERRORCode.EMAIL_PASSWORD_ERROR.getMessage()));
     }
 }

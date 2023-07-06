@@ -155,7 +155,7 @@ const requestUserRegister = async () => {
     await checkUserRegister(3)
     if (sign.value) {
       userRegister.password = md5(userRegister.password)
-      await HttpUtil.post('/v1/user/register',
+      await HttpUtil.post('/v1/user/email/register',
           userRegister).then(value => {
         if (value.data.code == 1000) {
           alert('注册成功，请登录')

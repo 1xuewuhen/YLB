@@ -148,9 +148,14 @@ const requestUserLogin = async () => {
   await checkUserLogin(3)
   if (sign.value) {
     userLogin.password = md5(userLogin.password)
-    await HttpUtil.post('/v1/email/code/login').then(value => {
-
+    let userRegister = {...userLogin}
+    await HttpUtil.post('/v1/user/email/login', userRegister).then(value => {
+      if (value.data.code == 1000){
+        alert("登录成功")
+      }
     })
+    userLogin.password = 'www.520.COM'
+    sign.value = true
   }
 }
 </script>
