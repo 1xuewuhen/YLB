@@ -6,7 +6,7 @@
         <groupId>com.xwh</groupId>
         <artifactId>micr-parent</artifactId>
         <version>1.0.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath>../micr-parent/pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>micr-info</artifactId>
     <name>micr-info</name>

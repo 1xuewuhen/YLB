@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xwh.common.enums.ERRORCode;
 import com.xwh.common.exception.InfoException;
+import com.xwh.common.exception.UserException;
 import com.xwh.front.view.R;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,12 @@ import java.util.Map;
 @RestControllerAdvice
 public class ExceptionHandle {
 
+
+    @ExceptionHandler(value = {UserException.class})
+    public R userException(UserException e) {
+        JSONObject jsonObject = JSON.parseObject(e.getMessage());
+        return R.error().setCode(jsonObject.getInteger("code")).setMsg(jsonObject.getString("message"));
+    }
     @ExceptionHandler(value = {InfoException.class})
     public R infoException(InfoException e) {
         JSONObject jsonObject = JSON.parseObject(e.getMessage());
@@ -44,8 +51,8 @@ public class ExceptionHandle {
         return R.error().setCode(ERRORCode.SYSTEM_ERROR.getCode()).setMsg(ERRORCode.SYSTEM_ERROR.getMessage());
     }
 
-    @ExceptionHandler(value = {RuntimeException.class, Exception.class})
-    public R MAXException(Exception e) {
-        return R.builder().code(ERRORCode.SYSTEM_ERROR.getCode()).msg(e.getMessage()).build();
+    @ExceptionHandler(value = {RuntimeException.class})
+    public R MAXException(RuntimeException e) {
+        return R.error().setCode(ERRORCode.SYSTEM_ERROR.getCode()).setMsg(ERRORCode.SYSTEM_ERROR.getMessage());
     }
 }
