@@ -15,7 +15,7 @@ class MicrWebApplicationTests {
 
     @Test
     void contextLoads() {
-        aliyunRealNameService.realName();
+//        aliyunRealNameService.realName();
     }
 
 }

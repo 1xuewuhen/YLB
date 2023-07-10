@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.xwh.api.model.FinanceAccount;
 import com.xwh.api.model.User;
 import com.xwh.api.service.UserService;
+import com.xwh.api.vo.RealNameVo;
 import com.xwh.api.vo.UserRegister;
 import com.xwh.common.constants.RedisKey;
 import com.xwh.common.enums.ERRORCode;
@@ -112,5 +113,17 @@ public class UserServiceImpl implements UserService {
             return user;
         }
         throw new UserException(CommonUtil.generateJSON(ERRORCode.EMAIL_PASSWORD_ERROR.getCode(), ERRORCode.EMAIL_PASSWORD_ERROR.getMessage()));
+    }
+
+    // 更新实名认证信息
+    @Override
+    public void modifyRealName(RealNameVo realNameVo) {
+        User user = new User().setEmail(realNameVo.getEmail()).setIdCard(realNameVo.getIdCard()).setName(realNameVo.getName());
+        User u = queryByEmail(user.getEmail());
+        if (Objects.nonNull(u)) {
+            userMapper.updateRealNameByEmail(user);
+            return;
+        }
+        throw new UserException(CommonUtil.generateJSON(ERRORCode.EMAIL_NO_REGISTER.getCode(), ERRORCode.EMAIL_NO_REGISTER.getMessage()));
     }
 }

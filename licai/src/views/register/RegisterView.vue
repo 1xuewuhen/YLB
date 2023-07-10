@@ -67,13 +67,14 @@ const userRegister = reactive<{
   code: string
 }>({
   code: "2222",
-  email: "123456@163.com",
+  email: "1234567@163.com",
   password: "www.520.COM"
 })
 let codeText = ref<string>('获取验证码')
 let isSend = ref<boolean>(false)
 let agree = ref<boolean>(false)
 let sign = ref<boolean>(true)
+// TODO alert('')在这种情况下十分不好用，建议使用其他UI组件的弹框
 const checkUserRegister = async (type: number) => {
   switch (type) {
     case 1: {

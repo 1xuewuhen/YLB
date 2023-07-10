@@ -58,7 +58,7 @@ const userLogin = reactive<{
   code: string
 }>({
   code: "2222",
-  email: "123456@163.com",
+  email: "1234567@163.com",
   password: "www.520.COM"
 })
 let codeText = ref<string>('获取验证码')

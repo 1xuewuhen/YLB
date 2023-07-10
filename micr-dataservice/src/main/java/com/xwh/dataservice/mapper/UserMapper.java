@@ -24,4 +24,6 @@ public interface UserMapper {
 
     // 根据邮箱查询数据
     User selectByEmail(@Param("email") String email);
+
+    void updateRealNameByEmail(User user);
 }

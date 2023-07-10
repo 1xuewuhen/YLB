@@ -1,7 +1,9 @@
 package com.xwh.front.controller;
 
+import com.xwh.api.checkInterface.RealName;
 import com.xwh.api.checkInterface.UserGroup;
 import com.xwh.api.model.User;
+import com.xwh.api.vo.RealNameVo;
 import com.xwh.api.vo.UserRegister;
 import com.xwh.common.constants.RedisKey;
 import com.xwh.common.enums.ERRORCode;
@@ -9,14 +11,17 @@ import com.xwh.common.enums.RCode;
 import com.xwh.common.exception.InfoException;
 import com.xwh.common.util.CommonUtil;
 import com.xwh.common.util.JwtUtil;
+import com.xwh.front.service.AliyunRealNameService;
 import com.xwh.front.view.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +38,41 @@ import java.util.Objects;
 public class UserController extends BaseController {
 
 
+    @Resource
+    private AliyunRealNameService aliyunRealNameService;
+
+    /**
+     * 实名认证
+     *
+     * @param realNameVo
+     * @return
+     */
+    @ApiOperation(value = "实名认证", notes = "使用第三方认证功能，进行实名认证，提供邮箱号，姓名，身份证号")
+    @PostMapping("/RealName")
+    public R userRealName(@Validated(value = {RealName.Authentication.class}) @RequestBody RealNameVo realNameVo) {
+        BoundValueOperations<String, String> boundValueOperations =
+                stringRedisTemplate.boundValueOps(RedisKey.KEY_EMAIL_CODE_AUTHENTICATION + realNameVo.getEmail());
+        String keyAuthentication = boundValueOperations.get();
+        if (Objects.isNull(keyAuthentication)) {
+            return R.error().setCode(ERRORCode.EMAIL_NO_REGISTER.getCode()).setMsg(ERRORCode.EMAIL_NO_REGISTER.getMessage());
+        }
+        if (!realNameVo.getCode().equals(keyAuthentication)) {
+            return R.error().setCode(ERRORCode.EMAIL_CODE_ERROR.getCode()).setMsg(ERRORCode.EMAIL_CODE_ERROR.getMessage());
+        }
+        if (aliyunRealNameService.realName(realNameVo)) {
+            userService.modifyRealName(realNameVo);
+            return R.ok();
+        }
+        return R.error();
+    }
+
+    /**
+     * 用户登录
+     *
+     * @param userRegister
+     * @return
+     * @throws Exception
+     */
     @ApiOperation(value = "用户登录", notes = "使用邮箱登录")
     @PostMapping("/email/login")
     public R userLogin(@Validated(value = UserGroup.Login.class) @RequestBody UserRegister userRegister) throws Exception {
