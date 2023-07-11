@@ -17,5 +17,5 @@ export default defineConfig({
     build:{
         outDir:'ylb',
         assetsDir:'static'
-    }
+    },
 })
