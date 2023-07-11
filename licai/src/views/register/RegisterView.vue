@@ -21,7 +21,7 @@
                    @blur="checkUserRegister(2)"
                    v-model="userRegister.password"
                    placeholder="请输入6-20位英文和数字混合密码" class="form-border user-pass "
-                   autocomplete name="password">
+                    name="password">
             <p class="prompt_pass"></p>
             <div class="form-yzm form-border ">
               <input class="yzm-write" type="text" v-model="userRegister.code" @blur="checkUserRegister(3)" name=""

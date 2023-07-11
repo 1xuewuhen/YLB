@@ -21,12 +21,14 @@
     <p class="preferred-select-txt">
       优选计划项目，投资回报周期{{ item.cycle }}个月，起点低，适合短期资金周转、对流动性要求高的投资人。
     </p>
-    <router-link :to="{path:'/page/product/detail',query:{productId:item.id}}" class="preferred-select-btn">立即投资</router-link>
+    <router-link :to="{path:'/page/product/detail',query:{productId:item.id}}" class="preferred-select-btn">立即投资
+    </router-link>
   </li>
 </template>
 <script setup lang="ts">
-import {Product} from '@/interface/typeInterface'
+import {type Product} from '@/interface/typeInterface'
 import {useRoute} from "vue-router";
+
 const route = useRoute()
 
 withDefaults(defineProps<

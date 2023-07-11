@@ -1,5 +1,17 @@
 import {createRouter, createWebHistory, type RouteRecordRaw} from 'vue-router'
 
+const selectEnvType = (): string => {
+    if (import.meta.env.DEV) {
+        return import.meta.env.BASE_URL
+    } else if (import.meta.env.PROD) {
+        if (import.meta.env.VITE_TYPE == 1) {
+            return import.meta.env.VITE_TOMCAT_CONTEXT_PATH
+        } else {
+            return import.meta.env.VITE_NGINX_CONTEXT_PATH
+        }
+    }
+}
+
 
 const routes: RouteRecordRaw[] = [
     {
@@ -34,8 +46,7 @@ const routes: RouteRecordRaw[] = [
     }
 ]
 const router = createRouter({
-    history: createWebHistory(import.meta.env.DEV?import.meta.env.BASE_URL:import.meta.env.VITE_CONTEXT_PATH),
+    history: createWebHistory(selectEnvType()),
     routes: routes,
 })
-
 export default router

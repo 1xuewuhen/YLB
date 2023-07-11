@@ -134,7 +134,7 @@ const checkRealName = (num: number) => {
     }
     case 2: {
       const regExp = new RegExp("^\\d{8,18}|[0-9x]{8,18}|[0-9X]{8,18}?$")
-      if (!regExp.test(realNameVo.idCard)) {
+      if (!regExp.test(realNameVo.idCard as string)) {
         layx.msg("身份证校验失败", {dialogIcon: 'warn'})
         return;
       }
@@ -142,7 +142,7 @@ const checkRealName = (num: number) => {
     }
     case 3: {
       const regExp = new RegExp("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$")
-      if (!regExp.test(realNameVo.email)) {
+      if (!regExp.test(realNameVo.email as string)) {
         layx.msg("邮箱校验失败", {dialogIcon: 'warn'})
         return;
       }

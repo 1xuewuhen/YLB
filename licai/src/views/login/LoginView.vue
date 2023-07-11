@@ -19,7 +19,7 @@
                    name="mobile" placeholder="请输入邮箱">
             <p class="prompt_num"></p>
             <input type="password" placeholder="请输入登录密码" v-model="userLogin.password" @blur="checkUserLogin(2)"
-                   class="form-border user-pass" autocomplete
+                   class="form-border user-pass"
                    name="password">
             <p class="prompt_pass"></p>
             <div class="form-yzm form-border">
