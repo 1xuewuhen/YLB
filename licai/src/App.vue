@@ -9,6 +9,7 @@ const platInfoStore = PlatInfoStore()
 onMounted(async () => {
   await platInfoStore.getPlatInfo()
 })
+console.log(import.meta.env)
 </script>
 
 

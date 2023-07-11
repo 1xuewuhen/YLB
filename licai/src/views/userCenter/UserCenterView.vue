@@ -6,7 +6,7 @@
     <div class="user-head">
       <div class="user-head-left fl">
         <div class="user-head-img">
-          <img src="public/image/user-head.png" alt="">
+          <img src="@/assets/image/user-head.png" alt="">
         </div>
         <p>上传头像</p>
       </div>
