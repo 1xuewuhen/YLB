@@ -5,7 +5,7 @@ import {PlatInfoType} from '@/interface/typeInterface'
 export const PlatInfoStore = defineStore("platInfo", {
     state() {
         return {
-            platInfo: <PlatInfoType>{}
+            platInfo: {} as PlatInfoType
         }
     },
     actions: {
