@@ -27,6 +27,9 @@ public enum ERRORCode {
 
     // 数据错误
     DATA_CHECK_ERROR(12001, "数据校验错误"),
+
+    // token错误
+    TOKEN_OMVALID(13000,"token 无效"),
     ;
 
     private Integer code;

@@ -34,3 +34,7 @@ aliyun:
     #appcode
     appcode: xxxxxxxxxxxxxxxxx
 
+#token:
+#  check:
+#    path:
+#      - '/v1/user/realName'

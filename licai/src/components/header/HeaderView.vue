@@ -25,6 +25,8 @@
 <!--        <router-link to:"">登录</router-link>-->
         <router-link to="/login">登录</router-link>
         <router-link to="/register">注册</router-link>
+        <router-link to="/realName">实名认证</router-link>
+        <router-link to="/userCenter">用户中心</router-link>
       </div>
     </div>
   </div>

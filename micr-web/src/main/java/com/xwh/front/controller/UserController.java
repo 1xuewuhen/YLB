@@ -48,7 +48,7 @@ public class UserController extends BaseController {
      * @return
      */
     @ApiOperation(value = "实名认证", notes = "使用第三方认证功能，进行实名认证，提供邮箱号，姓名，身份证号")
-    @PostMapping("/RealName")
+    @PostMapping("/realName")
     public R userRealName(@Validated(value = {RealName.Authentication.class}) @RequestBody RealNameVo realNameVo) {
         BoundValueOperations<String, String> boundValueOperations =
                 stringRedisTemplate.boundValueOps(RedisKey.KEY_EMAIL_CODE_AUTHENTICATION + realNameVo.getEmail());

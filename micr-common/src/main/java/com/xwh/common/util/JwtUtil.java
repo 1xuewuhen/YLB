@@ -1,5 +1,6 @@
 package com.xwh.common.util;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -39,7 +40,7 @@ public class JwtUtil {
             String key = properties.getProperty("jwt.key", "f24e38539d0d4386ab254e3310ffb508");
             time = properties.getProperty("jwt.expTime", "20");
             secretKey = Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8));
-            issuer = properties.getProperty("jwt.issuer","血狱神教");
+            issuer = properties.getProperty("jwt.issuer", "血狱神教");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,6 +58,11 @@ public class JwtUtil {
                 .setId(UUID.randomUUID().toString().replaceAll("-", ""))
                 .addClaims(map)
                 .compact();
+    }
+
+    public static Claims readJwt(String jwt) throws Exception {
+        return Jwts.parserBuilder().setSigningKey(secretKey).build()
+                .parseClaimsJws(jwt).getBody();
     }
 
 

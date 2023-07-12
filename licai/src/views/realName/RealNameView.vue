@@ -77,7 +77,7 @@ const authentication = () => {
   checkRealName(1)
   checkRealName(2)
   checkRealName(3)
-  HttpUtil.post("/v1/user/RealName",
+  HttpUtil.post("/v1/user/realName",
       realNameVo
   ).then(value => {
     if (value.data.code == 1000) {
