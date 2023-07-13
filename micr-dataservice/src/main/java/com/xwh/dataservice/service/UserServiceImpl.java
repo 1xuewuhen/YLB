@@ -3,6 +3,7 @@ package com.xwh.dataservice.service;
 import com.alibaba.fastjson.JSON;
 import com.xwh.api.model.FinanceAccount;
 import com.xwh.api.model.User;
+import com.xwh.api.pojo.UserAccountInfo;
 import com.xwh.api.service.UserService;
 import com.xwh.api.vo.RealNameVo;
 import com.xwh.api.vo.UserRegister;
@@ -125,5 +126,15 @@ public class UserServiceImpl implements UserService {
             return;
         }
         throw new UserException(CommonUtil.generateJSON(ERRORCode.EMAIL_NO_REGISTER.getCode(), ERRORCode.EMAIL_NO_REGISTER.getMessage()));
+    }
+
+    // 获取用户资金信息
+    @Override
+    public UserAccountInfo queryUserAllInfo(Integer uid) {
+        UserAccountInfo userAccountInfo = null;
+        if (Objects.nonNull(uid)) {
+            userAccountInfo = userMapper.selectUserAccountById(uid);
+        }
+        return userAccountInfo;
     }
 }

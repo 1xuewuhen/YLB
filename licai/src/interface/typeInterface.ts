@@ -1,3 +1,20 @@
+
+export interface RecodeType {
+    id?: number;
+    result?: string;
+    rechargeDate?: string;
+    rechargeMoney?: number;
+}
+export interface UserAllAccountInfoType {
+    id?: number;
+    phone?: string;
+    email?: string;
+    name?: string;
+    lastLoginTime?: number;
+    headerImage?: string;
+    availableMoney?: number;
+}
+
 export interface PlatInfoType {
     historyAvgRate?: number,
     registerUsers?: number,

@@ -3,6 +3,7 @@ package com.xwh.front.controller;
 import com.xwh.api.checkInterface.RealName;
 import com.xwh.api.checkInterface.UserGroup;
 import com.xwh.api.model.User;
+import com.xwh.api.pojo.UserAccountInfo;
 import com.xwh.api.vo.RealNameVo;
 import com.xwh.api.vo.UserRegister;
 import com.xwh.common.constants.RedisKey;
@@ -40,6 +41,22 @@ public class UserController extends BaseController {
 
     @Resource
     private AliyunRealNameService aliyunRealNameService;
+
+    /**
+     * @description: 获取用户资金信息
+     * @author 血无痕
+     * @date 2023/7/13 21:01
+     * @version 1.0
+     */
+    @ApiOperation(value = "获取用户资金信息", notes = "获取用户资金信息，包括用户名，登录时间，金额，邮箱号，手机号")
+    @GetMapping("/UserAllAccountInfo")
+    public R UserAllAccountInfo(@RequestParam("uid") Integer uid) {
+        UserAccountInfo userAccountInfo = null;
+        if (Objects.nonNull(uid)) {
+            userAccountInfo = userService.queryUserAllInfo(uid);
+        }
+        return R.ok().setData(userAccountInfo);
+    }
 
     /**
      * 实名认证

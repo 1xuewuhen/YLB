@@ -1,6 +1,7 @@
 package com.xwh.dataservice.mapper;
 
 import com.xwh.api.model.User;
+import com.xwh.api.pojo.UserAccountInfo;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
@@ -26,4 +27,7 @@ public interface UserMapper {
     User selectByEmail(@Param("email") String email);
 
     void updateRealNameByEmail(User user);
+
+    // 获取用户资金信息
+    UserAccountInfo selectUserAccountById(@Param("uid") Integer uid);
 }

@@ -161,11 +161,14 @@ const requestUserLogin = async () => {
         // 有值，进入用户中心
         if (value.data.data.name==''){
           router.push({
-            path:'/realName'
+            path:'/realName',
           })
         }else {
           router.push({
-            path:'/userCenter'
+            path:'/userCenter',
+            query:{
+              uid:value.data.data.uid
+            }
           })
         }
       }else {

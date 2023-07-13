@@ -82,8 +82,12 @@ const authentication = () => {
   ).then(value => {
     if (value.data.code == 1000) {
       layx.msg("认证成功", {dialogIcon: 'info'})
+      let userInfo = localStorage.getItem("userinfo");
       router.push({
-        path: '/userCenter'
+        path: '/userCenter',
+        query: {
+          uid:JSON.parse(userInfo).uid
+        }
       })
     } else {
       layx.msg('认证失败', {dialogIcon: 'warn'})

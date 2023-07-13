@@ -13,7 +13,8 @@
         <result column="header_image" jdbcType="VARCHAR" property="headerImage"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, phone, login_password,email, name, id_card, add_time, last_login_time, header_image
+        id
+        , phone, login_password,email, name, id_card, add_time, last_login_time, header_image
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -37,6 +38,19 @@
         <include refid="Base_Column_List"/>
         from u_user
         where email = #{email}
+    </select>
+    <!--获取用户资金信息-->
+    <select id="selectUserAccountById" resultType="com.xwh.api.pojo.UserAccountInfo">
+        SELECT uu.id,
+               uu.email,
+               uu.phone,
+               uu.name,
+               DATE_FORMAT(uu.last_login_time,'%Y-%m-%d %H:%i:%s') as last_login_time,
+               uu.header_image,
+               ufa.available_money
+        FROM u_user uu
+                 LEFT JOIN u_finance_account ufa on uu.id = ufa.uid
+        WHERE uu.id = #{uid}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
