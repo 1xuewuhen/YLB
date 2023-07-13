@@ -37,6 +37,7 @@
         <jjwt-impl-version>0.11.5</jjwt-impl-version>
         <jjwt-jackson-version>0.11.5</jjwt-jackson-version>
         <junit-version>4.13.2</junit-version>
+        <commons-logging-version>1.2</commons-logging-version>
     </properties>
     <dependencies>
 <!--        <dependency>-->
@@ -115,6 +116,11 @@
                 <artifactId>jjwt-impl</artifactId>
                 <version>${jjwt-impl-version}</version>
                 <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${commons-logging-version}</version>
             </dependency>
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
