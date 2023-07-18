@@ -11,7 +11,7 @@ public interface RedisKey {
     String KEY_PHONE_USER = "PHONE:USER:";
     String KEY_EMAIL_USER = "EMAIL:USER:";
 
-    //注册时邮箱验证码
+    // 注册时邮箱验证码
     String KEY_EMAIL_CODE_REG = "EMAIL:REG:";
     // 登录时邮箱验证码
     String KEY_EMAIL_CODE_LOGIN = "EMAIL:LOGIN:";
