@@ -62,4 +62,10 @@ public class ExceptionHandle {
         log.error("系统异常----{}", e.getMessage());
         return R.error().setCode(ERRORCode.SYSTEM_ERROR.getCode()).setMsg(ERRORCode.SYSTEM_ERROR.getMessage());
     }
+
+    @ExceptionHandler(value = {Exception.class})
+    public R MAXException(Exception e) {
+        log.error("系统异常----{}", e.getMessage());
+        return R.error().setCode(ERRORCode.SYSTEM_ERROR.getCode()).setMsg(ERRORCode.SYSTEM_ERROR.getMessage());
+    }
 }
