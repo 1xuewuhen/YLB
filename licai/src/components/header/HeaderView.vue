@@ -3,11 +3,15 @@
   <div class="public-head">
     <div class="public-head-nav">
       <div class="public-head-left">
-        <h1 class="public-head-logo"><router-link to="/">
-          <img src="@/assets/image/logo.png" alt="">
-        </router-link></h1>
+        <h1 class="public-head-logo">
+          <router-link to="/">
+            <img src="@/assets/image/logo.png" alt="">
+          </router-link>
+        </h1>
         <ul class="public-head-list">
-          <li><router-link to="/">主页</router-link></li>
+          <li>
+            <router-link to="/">主页</router-link>
+          </li>
           <li class="public-head-hover">
             <a href="javascript:void(0);">我要投资</a>
             <!--二级导航-->
@@ -22,11 +26,11 @@
         </ul>
       </div>
       <div class="public-head-right">
-<!--        <router-link to:"">登录</router-link>-->
+        <!--        <router-link to:"">登录</router-link>-->
         <router-link to="/login">登录</router-link>
         <router-link to="/register">注册</router-link>
         <router-link to="/realName">实名认证</router-link>
-        <router-link to="/userCenter">用户中心</router-link>
+        <router-link to="" @click="userCenter">用户中心</router-link>
       </div>
     </div>
   </div>
@@ -34,9 +38,27 @@
 </template>
 
 <script setup lang="ts">
+import {useRouter} from "vue-router";
 
+const router = useRouter()
+const userinfo = JSON.parse(<string>localStorage.getItem('userinfo'));
+
+const userCenter = () => {
+  if (!userinfo) {
+    router.push({
+      path: '/login'
+    })
+  } else {
+    router.push({
+      path: '/userCenter',
+      query: {
+        uid: userinfo.uid
+      }
+    })
+  }
+
+}
 </script>
-
 
 
 <style scoped>

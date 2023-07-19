@@ -39,7 +39,7 @@ var defaults = withDefaults(defineProps<{
     }
   ]
 });
-console.log(defaults.recode)
+// console.log(defaults.recode)
 </script>
 
 <style scoped>

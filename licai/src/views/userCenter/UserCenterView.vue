@@ -27,7 +27,9 @@
     <!--记录-->
     <div class="user-record-box clearfix">
       <RecodeView :recode="recode"></RecodeView>
-      <!--      <div class="user-record user-record-1">
+      <RecodeView :recode="recode"></RecodeView>
+      <RecodeView :recode="recode"></RecodeView>
+<!--            <div class="user-record user-record-1">
               <h3 class="user-record-title">最近投资</h3>
               <table align="center" width="388" border="0" cellspacing="0" cellpadding="0">
                 <thead class="datail_thead">
@@ -79,8 +81,8 @@
               </table>
               &lt;!&ndash;无记录&ndash;&gt;
               <p class="user-record-no">还没有投资记录，请投资：<a href="user_center.html" target="_blank">投资</a></p>
-            </div>-->
-      <!--      <div class="user-record user-record-2">
+            </div>
+            <div class="user-record user-record-2">
               <h3 class="user-record-title">最近充值</h3>
               <table align="center" width="388" border="0" cellspacing="0" cellpadding="0">
                 <thead class="datail_thead">
