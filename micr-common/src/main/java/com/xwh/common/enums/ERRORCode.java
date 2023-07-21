@@ -15,6 +15,7 @@ public enum ERRORCode {
      */
     SYSTEM_ERROR(10000, "系统错误，请稍后再试"),
 
+    // 发送消息错误
     SEND_INFO_ERROR(11000, "发送消息失败"),
 
     // 邮箱错误
