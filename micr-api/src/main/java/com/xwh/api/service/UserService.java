@@ -28,4 +28,7 @@ public interface UserService {
 
     // 获取用户资金信息
     UserAccountInfo queryUserAllInfo(Integer uid);
+
+    // 查询用户
+    User queryById(Integer uid);
 }

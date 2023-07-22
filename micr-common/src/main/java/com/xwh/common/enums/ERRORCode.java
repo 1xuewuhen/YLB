@@ -27,10 +27,18 @@ public enum ERRORCode {
     EMAIL_PASSWORD_ERROR(11006, "邮箱账号或密码错误"),
 
     // 数据错误
-    DATA_CHECK_ERROR(12001, "数据校验错误"),
+    DATA_CHECK_ERROR(12000, "数据校验错误"),
+    DATA_MONEY_ERROR(12001, "数据校验错误"),
 
     // token错误
     TOKEN_INVALID(13000,"token 无效"),
+
+    // 资金错误
+    MONEY_ERROR(13000,"用户帐户不存在"),
+    MONEY_INSUFFICIENT_ERROR(13001,"资金不充足"),
+
+    // 产品错误
+    PRODUCT_NOT_PRESENT_ERROR(13001,"资金不充足"),
     ;
 
     private Integer code;

@@ -15,4 +15,13 @@ public interface YLBConstant {
     Integer USER_LOGIN = 1;
     Integer USER_REGISTER = 2;
 
+    // 产品状态(0~为满标，1~满标，2~收益计划)
+    Integer PRODUCT_STATUS_SELLING = 0;
+    Integer PRODUCT_STATUS_SELLED = 1;
+    Integer PRODUCT_STATUS_PLAN = 2;
+
+    // 投资状态(1~成功，2~失败)
+    Integer INVEST_STATUS_SUCCESS = 1;
+    Integer INVEST_STATUS_FAIL = 2;
+
 }

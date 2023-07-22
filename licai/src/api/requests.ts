@@ -6,15 +6,20 @@ const requests = axios.create({
     timeout: 50000,
 })
 
-const url = ["/v1/user/realName", "/v1/recharge/records","/v1/user/UserAllAccountInfo"]
+const url = ["/v1/user/realName", "/v1/recharge/records","/v1/user/UserAllAccountInfo","/v1/invest/product"]
 requests.interceptors.request.use((config: InternalAxiosRequestConfig<any>) => {
     const configUrl = config.url
-    // console.log(config.url?.lastIndexOf('?'));
+    let urlPath = ''
+    if (configUrl.lastIndexOf('?')>0){
+        urlPath = config.url.substring(0,config.url?.lastIndexOf('?'))
+    }else {
+        urlPath = config.url
+    }
     // console.log(config.url.substring(0,config.url?.lastIndexOf('?')))
+    // console.log(configUrl)
     url.forEach(item => {
-
-        if (configUrl.substring(0,configUrl.lastIndexOf('?')) == item) {
-            // console.log(item)
+        if (urlPath == item) {
+            // console.log(configUrl)
             let storageToken = sessionStorage.getItem("token")
             let userInfo = sessionStorage.getItem("userinfo")
             if (storageToken && userInfo) {
@@ -34,7 +39,7 @@ requests.interceptors.response.use((res: AxiosResponse<any, any>) => {
     if (res.data.code != 1000) {
         if (res.data.code == 13000) {
             layx.msg(res.data.msg, {dialogIcon: 'warn'})
-            // window.location.href = '/login'
+            window.location.href = '/login'
         } else {
             layx.msg(res.data.msg, {dialogIcon: 'warn'})
         }

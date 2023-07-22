@@ -31,7 +31,7 @@
     </select>
     <!--  利率平均值-->
     <select id="selectAvgRate" resultType="java.math.BigDecimal">
-        select round(avg(rate),2) as avgRate
+        select round(avg(rate), 2) as avgRate
         from b_product_info
     </select>
     <!--    -->
@@ -228,5 +228,18 @@
             product_desc       = #{productDesc,jdbcType=VARCHAR},
             version            = #{version,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateLeftProductMoney">
+        update b_product_info
+        set left_product_money = left_product_money - #{money}
+        where id = #{id}
+          and (left_product_money - #{money} > 0)
+    </update>
+    <!--更新产品是满标状态-->
+    <update id="updateProductStatus">
+        update b_product_info
+        set product_status    = 1,
+            product_full_time = now()
+        where id = #{id}
     </update>
 </mapper>

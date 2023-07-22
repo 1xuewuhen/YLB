@@ -137,4 +137,14 @@ public class UserServiceImpl implements UserService {
         }
         return userAccountInfo;
     }
+
+    // 查询用户
+    @Override
+    public User queryById(Integer uid) {
+        User user = null;
+        if (Objects.nonNull(uid)) {
+            user = userMapper.selectByPrimaryKey(uid);
+        }
+        return user;
+    }
 }

@@ -6,6 +6,7 @@ import com.xwh.common.enums.ERRORCode;
 import com.xwh.common.exception.InfoException;
 import org.apache.commons.lang3.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -50,11 +51,11 @@ public class CommonUtil {
     }
 
     // 邮箱格式
-    public static boolean checkEmail(String email){
+    public static boolean checkEmail(String email) {
         if (StringUtils.isNotBlank(email)) {
             return Pattern.matches("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$", email);
         }
-        throw new InfoException(generateJSON(ERRORCode.EMAIL_NULL_ERROR.getCode(),ERRORCode.EMAIL_NULL_ERROR.getMessage()));
+        throw new InfoException(generateJSON(ERRORCode.EMAIL_NULL_ERROR.getCode(), ERRORCode.EMAIL_NULL_ERROR.getMessage()));
     }
 
     // 生产json串
@@ -63,5 +64,13 @@ public class CommonUtil {
         jsonObject.put("code", code);
         jsonObject.put("message", message);
         return JSON.toJSONString(jsonObject);
+    }
+
+    // 比较bigDecimal
+    public static boolean geBigDecimal(BigDecimal n1, BigDecimal n2) {
+        if (Objects.isNull(n1) && Objects.isNull(n2)) {
+            throw new RuntimeException(generateJSON(ERRORCode.DATA_MONEY_ERROR.getCode(), ERRORCode.DATA_MONEY_ERROR.getMessage()));
+        }
+        return n1.compareTo(n2) >= 0;
     }
 }

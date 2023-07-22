@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xwh.common.enums.ERRORCode;
 import com.xwh.common.exception.InfoException;
+import com.xwh.common.exception.MoneyException;
+import com.xwh.common.exception.ProductException;
 import com.xwh.common.exception.UserException;
 import com.xwh.front.view.R;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +41,20 @@ public class ExceptionHandle {
     public R infoException(InfoException e) {
         JSONObject jsonObject = JSON.parseObject(e.getMessage());
         log.error("信息异常----{}", e.getMessage());
+        return R.error().setCode(jsonObject.getInteger("code")).setMsg(jsonObject.getString("message"));
+    }
+
+    @ExceptionHandler(value = {MoneyException.class})
+    public R infoException(MoneyException e) {
+        JSONObject jsonObject = JSON.parseObject(e.getMessage());
+        log.error("金钱异常----{}", e.getMessage());
+        return R.error().setCode(jsonObject.getInteger("code")).setMsg(jsonObject.getString("message"));
+    }
+
+    @ExceptionHandler(value = {ProductException.class})
+    public R infoException(ProductException e) {
+        JSONObject jsonObject = JSON.parseObject(e.getMessage());
+        log.error("产品异常----{}", e.getMessage());
         return R.error().setCode(jsonObject.getInteger("code")).setMsg(jsonObject.getString("message"));
     }
 

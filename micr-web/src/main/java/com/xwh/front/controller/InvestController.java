@@ -1,5 +1,6 @@
 package com.xwh.front.controller;
 
+import com.xwh.api.model.User;
 import com.xwh.common.constants.RedisKey;
 import com.xwh.common.util.CommonUtil;
 import com.xwh.front.view.R;
@@ -8,10 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.redis.core.BoundZSetOperations;
 import org.springframework.data.redis.core.ZSetOperations;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -39,7 +37,7 @@ public class InvestController extends BaseController {
      * @date 2023/6/22 13:27
      * @version 1.0
      */
-    @ApiOperation(value = "投资排行榜",notes = "显示投资信息最高的三位信息")
+    @ApiOperation(value = "投资排行榜", notes = "显示投资信息最高的三位信息")
     @GetMapping("/invest/rank")
     public R showInvestRank() {
         // redis 查询数据
@@ -54,5 +52,35 @@ public class InvestController extends BaseController {
                     .build()).collect(Collectors.toList());
         }
         return R.ok().setList(rankList);
+    }
+
+    /**
+     * @description: 购买理财产品，更新投资排行榜
+     * @author 血无痕
+     * @date 2023/7/22 13:17
+     * @version 1.0
+     */
+    @ApiOperation(value = "投资理财产品", notes = "投资理财产品")
+    @PostMapping("/invest/product")
+    public R investProduct(
+            @RequestHeader("uid") Integer uid,
+            @RequestParam("productId") Integer productId,
+            @RequestParam("money") BigDecimal money) {
+        if (Objects.nonNull(uid) && Objects.nonNull(productId) &&
+                (Objects.nonNull(money) &&
+                        (CommonUtil.geBigDecimal(money.remainder(new BigDecimal("100")), BigDecimal.ZERO)) && CommonUtil.geBigDecimal(money, new BigDecimal("100")))) {
+            investService.investProduct(uid, productId, money);
+            modifyInvestRank(uid, money);
+            return R.ok();
+        }
+        return R.error();
+    }
+
+    private void modifyInvestRank(Integer uid, BigDecimal money) {
+        User user = userService.queryById(uid);
+        String keyInvestRank = RedisKey.KEY_INVEST_RANK;
+        if (Objects.nonNull(uid)) {
+            stringRedisTemplate.boundZSetOps(keyInvestRank).incrementScore(user.getPhone(), money.doubleValue());
+        }
     }
 }

@@ -243,9 +243,7 @@ onMounted(() => {
       records.value = value.data.data.records
       bidInfosRecords.value = value.data.data.bidInfosRecords
       incomeRecords.value = value.data.data.incomeRecords
-      // console.log(records.value)
-      // console.log(bidInfosRecords.value)
-      // console.log(incomeRecords.value)
+
     }
   })
 })

@@ -31,7 +31,7 @@
       <InvestmentRecordsView :bidInfoList="bidInfoList"></InvestmentRecordsView>
     </div>
     <!--右侧-->
-    <RightView></RightView>
+    <RightView :productInfo="productInfo" @refreshPage="refreshPage"></RightView>
   </div>
   <FooterView></FooterView>
 </template>
@@ -70,7 +70,11 @@ const bidInfoList = ref<BidInfoListType[]>([
   }
 ])
 const route = useRoute()
-onMounted(async () => {
+
+const refreshPage = () => {
+  queryData()
+}
+const queryData = async () => {
   await HttpUtil.get('/v1/product/info', {
     productId: route.query.productId
   }).then(value => {
@@ -79,6 +83,9 @@ onMounted(async () => {
       bidInfoList.value = value.data.list
     }
   })
+}
+onMounted(async () => {
+  await queryData()
 })
 </script>
 

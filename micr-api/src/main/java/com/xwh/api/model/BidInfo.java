@@ -1,9 +1,20 @@
 package com.xwh.api.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Data
+@NoArgsConstructor
+@Accessors(chain = true)
+@AllArgsConstructor
+@Builder
 public class BidInfo  implements Serializable {
     private Integer id;
 
@@ -16,52 +27,4 @@ public class BidInfo  implements Serializable {
     private Date bidTime;
 
     private Integer bidStatus;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getProdId() {
-        return prodId;
-    }
-
-    public void setProdId(Integer prodId) {
-        this.prodId = prodId;
-    }
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
-
-    public BigDecimal getBidMoney() {
-        return bidMoney;
-    }
-
-    public void setBidMoney(BigDecimal bidMoney) {
-        this.bidMoney = bidMoney;
-    }
-
-    public Date getBidTime() {
-        return bidTime;
-    }
-
-    public void setBidTime(Date bidTime) {
-        this.bidTime = bidTime;
-    }
-
-    public Integer getBidStatus() {
-        return bidStatus;
-    }
-
-    public void setBidStatus(Integer bidStatus) {
-        this.bidStatus = bidStatus;
-    }
 }

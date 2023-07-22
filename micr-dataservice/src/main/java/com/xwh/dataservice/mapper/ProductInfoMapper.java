@@ -27,4 +27,9 @@ public interface ProductInfoMapper {
 
     //  某个产品的记录总数
     int selectCountByType(@Param("pType") Integer pType);
+
+    void updateLeftProductMoney(@Param("id") Integer id, @Param("money") BigDecimal money);
+
+    //更新产品是满标状态
+    void updateProductStatus(@Param("id") Integer id, @Param("status") Integer status);
 }
