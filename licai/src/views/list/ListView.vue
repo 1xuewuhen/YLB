@@ -71,8 +71,6 @@ onMounted(async () => {
 })
 watch([route], (value, oldValue, onCleanup) => {
   initPage(value[0].query.pType as number, 1)
-  // console.log(value[0].query.pType)
-  // console.log(oldValue[0].query.pType)
 }, {
   deep: true
 })

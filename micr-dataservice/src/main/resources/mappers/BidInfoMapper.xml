@@ -50,6 +50,7 @@
         <include refid="Base_Column_List"/>
         FROM b_bid_info
         WHERE uid = #{uid}
+        order by bid_time desc
         LIMIT #{offset}, #{rows}
     </select>
 
@@ -57,6 +58,7 @@
         delete
         from b_bid_info
         where id = #{id,jdbcType=INTEGER}
+        order by bid_time desc
     </delete>
     <insert id="insert" parameterType="com.xwh.api.model.BidInfo">
         insert into b_bid_info (id, prod_id, uid,

@@ -25,6 +25,7 @@
         <include refid="Base_Column_List"/>
         from b_income_record
         where uid = #{uid}
+        order by income_date desc
         limit #{offset},#{rows}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

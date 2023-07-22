@@ -23,7 +23,7 @@
       </tbody>
     </table>
     <!--无记录-->
-    <p class="user-record-no">还没有投资记录，请投资：<a href="user_center.html" target="_blank">投资</a></p>
+    <p class="user-record-no">还没有投资记录，请投资：<router-link to="/index" >投资</router-link></p>
   </div>
 </template>
 

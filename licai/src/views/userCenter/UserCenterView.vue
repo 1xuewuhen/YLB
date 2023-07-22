@@ -18,8 +18,8 @@
         </ul>
         <div class="user-head-money fr">
           <p>可用余额：<span>￥{{ userAllAccountInfo.availableMoney }}元</span></p>
-          <a href="user_pay.html" target="_blank" class="user-head-a1">充值</a>
-          <a href="details.html" target="_blank" class="user-head-a2">投资</a>
+          <a href="javascript:void (0)" target="_blank" class="user-head-a1">充值</a>
+          <router-link to="/index" class="user-head-a2">投资</router-link>
         </div>
       </div>
 
