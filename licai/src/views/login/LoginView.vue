@@ -154,8 +154,8 @@ const requestUserLogin = async () => {
     await HttpUtil.post('/v1/user/email/login', userRegister).then(value => {
       if (value.data.code == 1000){
         // alert("登录成功")
-        localStorage.setItem("token","Banner " + value.data.accessToken)
-        localStorage.setItem("userinfo",JSON.stringify(value.data.data))
+        sessionStorage.setItem("token","Banner " + value.data.accessToken)
+        sessionStorage.setItem("userinfo",JSON.stringify(value.data.data))
 
         // 登录之后，如果name没有值，需要进入到实名认证页面
         // 有值，进入用户中心

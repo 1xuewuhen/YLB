@@ -26,9 +26,9 @@
     </div>
     <!--记录-->
     <div class="user-record-box clearfix">
-      <RecodeView :recode="recode"></RecodeView>
-      <RecodeView :recode="recode"></RecodeView>
-      <RecodeView :recode="recode"></RecodeView>
+      <RecodeView :recode="bidInfosRecords" :sign="1"></RecodeView>
+      <RecodeView :recode="records" :sign="2"></RecodeView>
+      <RecodeView :recode="incomeRecords" :sign="3"></RecodeView>
 <!--            <div class="user-record user-record-1">
               <h3 class="user-record-title">最近投资</h3>
               <table align="center" width="388" border="0" cellspacing="0" cellpadding="0">
@@ -213,7 +213,19 @@ const userAllAccountInfo = ref<UserAllAccountInfoType>({
   "headerImage": "",
   "availableMoney": 0
 })
-const recode = ref<RecodeType[]>([{
+const records = ref<RecodeType[]>([{
+  "id": 0,
+  "result": "",
+  "rechargeDate": "",
+  "rechargeMoney": 0
+}])
+const bidInfosRecords = ref<RecodeType[]>([{
+  "id": 0,
+  "result": "",
+  "rechargeDate": "",
+  "rechargeMoney": 0
+}])
+const incomeRecords = ref<RecodeType[]>([{
   "id": 0,
   "result": "",
   "rechargeDate": "",
@@ -228,7 +240,12 @@ onMounted(() => {
   })
   HttpUtil.get(`/v1/recharge/records?uid=${route.query.uid}`).then(value => {
     if (value.data.code == 1000){
-      recode.value = value.data.list
+      records.value = value.data.data.records
+      bidInfosRecords.value = value.data.data.bidInfosRecords
+      incomeRecords.value = value.data.data.incomeRecords
+      // console.log(records.value)
+      // console.log(bidInfosRecords.value)
+      // console.log(incomeRecords.value)
     }
   })
 })

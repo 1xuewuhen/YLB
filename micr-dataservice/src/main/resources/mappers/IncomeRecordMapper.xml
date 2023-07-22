@@ -20,7 +20,14 @@
     from b_income_record
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByUid" resultType="com.xwh.api.model.IncomeRecord">
+        select
+        <include refid="Base_Column_List"/>
+        from b_income_record
+        where uid = #{uid}
+        limit #{offset},#{rows}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from b_income_record
     where id = #{id,jdbcType=INTEGER}
   </delete>

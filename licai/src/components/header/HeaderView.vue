@@ -41,7 +41,7 @@
 import {useRouter} from "vue-router";
 
 const router = useRouter()
-const userinfo = JSON.parse(<string>localStorage.getItem('userinfo'));
+const userinfo = JSON.parse(<string>sessionStorage.getItem('userinfo'));
 
 const userCenter = () => {
   if (!userinfo) {

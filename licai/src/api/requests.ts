@@ -15,8 +15,8 @@ requests.interceptors.request.use((config: InternalAxiosRequestConfig<any>) => {
 
         if (configUrl.substring(0,configUrl.lastIndexOf('?')) == item) {
             // console.log(item)
-            let storageToken = localStorage.getItem("token")
-            let userInfo = localStorage.getItem("userinfo")
+            let storageToken = sessionStorage.getItem("token")
+            let userInfo = sessionStorage.getItem("userinfo")
             if (storageToken && userInfo) {
                 // 在header中传递userID和token
                 config.headers['Authorization'] = storageToken

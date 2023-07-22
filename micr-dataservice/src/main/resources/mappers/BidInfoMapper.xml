@@ -10,12 +10,12 @@
         <result column="bid_status" jdbcType="INTEGER" property="bidStatus"/>
     </resultMap>
 
-<!--    <resultMap id="BidInfoProduct" type="com.xwh.api.pojo.BidInfoProduct">-->
-<!--        <id column="id"  property="id"/>-->
-<!--        <result column="phone"   property="phone"/>-->
-<!--        <result column="bidMoney" property="bidMoney"/>-->
-<!--        <result column="bidTime"  property="bidTime"/>-->
-<!--    </resultMap>-->
+    <!--    <resultMap id="BidInfoProduct" type="com.xwh.api.pojo.BidInfoProduct">-->
+    <!--        <id column="id"  property="id"/>-->
+    <!--        <result column="phone"   property="phone"/>-->
+    <!--        <result column="bidMoney" property="bidMoney"/>-->
+    <!--        <result column="bidTime"  property="bidTime"/>-->
+    <!--    </resultMap>-->
     <sql id="Base_Column_List">
         id
         , prod_id, uid, bid_money, bid_time, bid_status
@@ -41,8 +41,18 @@
                            on bbi.uid = us.id
         where bbi.prod_id = #{productId}
         order by bid_time desc
-            limit #{offset}, #{rows}
+        limit #{offset}, #{rows}
     </select>
+    <!--充值记录-->
+    <select id="selectByUid" resultType="com.xwh.api.model.BidInfo">
+
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM b_bid_info
+        WHERE uid = #{uid}
+        LIMIT #{offset}, #{rows}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from b_bid_info
