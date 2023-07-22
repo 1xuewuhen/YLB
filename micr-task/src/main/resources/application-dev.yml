@@ -1,0 +1,15 @@
+server:
+  port: 5000
+
+dubbo:
+  registry:
+    address: zookeeper://127.0.0.1:2181
+  scan:
+    base-packages: com.xwh.task
+  consumer:
+    timeout: 50000
+    retries: 0
+    check: false
+#  protocol:
+#    port: 20882
+#    name: dubbo
