@@ -20,17 +20,22 @@
               <router-link :to="{path:'/page/product/list',query:{pType: 2}}">散标类产品</router-link>
             </div>
           </li>
-          <li><a href="user_center.html" target="_blank">借款人信息</a></li>
-          <li><a href="javascript:;" target="_blank">信息披露</a></li>
-          <li><a href="javascript:;" target="_blank">安全计划</a></li>
+          <li><a href="javascript:void (0)">借款人信息</a></li>
+          <li><a href="javascript:void (0)">信息披露</a></li>
+          <li><a href="javascript:void (0)">安全计划</a></li>
         </ul>
       </div>
-      <div class="public-head-right">
-        <!--        <router-link to:"">登录</router-link>-->
-        <router-link to="/login">登录</router-link>
-        <router-link to="/register">注册</router-link>
+      <div class="public-head-right" v-if="loginEd">
+<!--        <router-link to="/login">登录</router-link>-->
+<!--        <router-link to="/register">注册</router-link>-->
         <router-link to="/realName">实名认证</router-link>
         <router-link to="" @click="userCenter">用户中心</router-link>
+      </div>
+      <div class="public-head-right" v-else>
+                <router-link to="/login">登录</router-link>
+                <router-link to="/register">注册</router-link>
+<!--        <router-link to="/realName">实名认证</router-link>-->
+<!--        <router-link to="" @click="userCenter">用户中心</router-link>-->
       </div>
     </div>
   </div>
@@ -39,10 +44,17 @@
 
 <script setup lang="ts">
 import {useRouter} from "vue-router";
+import {onMounted, ref} from "vue";
 
 const router = useRouter()
 const userinfo = JSON.parse(<string>sessionStorage.getItem('userinfo'));
+const loginEd = ref(false)
 
+onMounted(() => {
+  if (userinfo){
+    loginEd.value = true
+  }
+})
 const userCenter = () => {
   if (!userinfo) {
     router.push({
