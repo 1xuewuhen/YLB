@@ -3,6 +3,7 @@ package com.xwh.dataservice.mapper;
 import com.xwh.api.model.IncomeRecord;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IncomeRecordMapper {
@@ -20,4 +21,7 @@ public interface IncomeRecordMapper {
 
     // 查询充值记录
     List<IncomeRecord> selectByUid(@Param("uid") Integer uid, @Param("offset") int offset, @Param("rows") Integer rows);
+
+    // 获取到期的收益记录
+    List<IncomeRecord> selectExpiredIncome(@Param("expiredDate") Date expiredDate, @Param("status") Integer status);
 }

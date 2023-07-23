@@ -81,4 +81,10 @@
         where uid = #{uid}
           and (available_money - #{money} >= 0)
     </update>
+    <!--把每个收益，进行返还，本金+利息-->
+    <update id="updateAvailableMoneyByIncome">
+        update u_finance_account
+        set available_money = available_money + #{bidMoney} + #{incomeMoney}
+        where uid = #{uid}
+    </update>
 </mapper>

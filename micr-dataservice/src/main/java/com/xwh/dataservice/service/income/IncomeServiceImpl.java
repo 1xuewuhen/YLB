@@ -6,6 +6,7 @@ import com.xwh.api.model.ProductInfo;
 import com.xwh.api.service.income.IncomeService;
 import com.xwh.common.constants.YLBConstant;
 import com.xwh.dataservice.mapper.BidInfoMapper;
+import com.xwh.dataservice.mapper.FinanceAccountMapper;
 import com.xwh.dataservice.mapper.IncomeRecordMapper;
 import com.xwh.dataservice.mapper.ProductInfoMapper;
 import org.apache.commons.lang3.time.DateUtils;
@@ -35,6 +36,8 @@ public class IncomeServiceImpl implements IncomeService {
     private BidInfoMapper bidInfoMapper;
     @Resource
     private IncomeRecordMapper incomeRecordMapper;
+    @Resource
+    private FinanceAccountMapper financeAccountMapper;
 
     // 收益计划
     @Transactional(rollbackFor = Exception.class)
@@ -46,7 +49,7 @@ public class IncomeServiceImpl implements IncomeService {
         Date endTime = DateUtils.truncate(currentDate, Calendar.DATE);
         List<ProductInfo> productInfoList = productInfoMapper.selectFullTimeProducts(beginTime, endTime, YLBConstant.PRODUCT_STATUS_SELLED);
         // 查询每个理财产品的多个投资记录
-        synchronized (this){
+        synchronized (this) {
             productInfoList.forEach(productInfo -> {
                 BigDecimal dayRate = BigDecimal.ZERO;
                 BigDecimal income = BigDecimal.ZERO;
@@ -80,8 +83,28 @@ public class IncomeServiceImpl implements IncomeService {
                     incomeRecordMapper.insertSelective(incomeRecord);
                 }
                 // 更新产品状态
-                productInfoMapper.updateStatus(productInfo.getId(),YLBConstant.PRODUCT_STATUS_PLAN);
+                productInfoMapper.updateStatus(productInfo.getId(), YLBConstant.PRODUCT_STATUS_PLAN);
             });
         }
+    }
+
+    // 收益返还
+    @Override
+    @Transactional
+    public void generateIncomeBack() {
+        // 获取到期的收益记录
+        Date currentDate = new Date();
+        Date expiredDate = DateUtils.truncate(DateUtils.addDays(currentDate, -1), Calendar.DATE);
+        List<IncomeRecord> incomeRecordList = incomeRecordMapper.selectExpiredIncome(expiredDate, YLBConstant.INCOME_STATUS_PLAN);
+        // 把每个收益，进行返还，本金+利息
+        synchronized (this) {
+            incomeRecordList.forEach(incomeRecord -> {
+                financeAccountMapper.updateAvailableMoneyByIncome(incomeRecord.getUid(), incomeRecord.getBidMoney(), incomeRecord.getIncomeMoney());
+                // 更新收益记录状态
+                incomeRecord.setIncomeStatus(YLBConstant.INCOME_STATUS_BACK);
+                incomeRecordMapper.updateByPrimaryKeySelective(incomeRecord);
+            });
+        }
+
     }
 }

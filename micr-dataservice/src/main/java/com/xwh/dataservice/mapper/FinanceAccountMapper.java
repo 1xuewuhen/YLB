@@ -23,4 +23,7 @@ public interface FinanceAccountMapper {
 
     // 扣除账户资金(更新)
     void updateAvailableMoneyByInvest(@Param("uid") Integer uid, @Param("money") BigDecimal money);
+
+    // 把每个收益，进行返还，本金+利息
+    void updateAvailableMoneyByIncome(@Param("uid") Integer uid, @Param("bidMoney") BigDecimal bidMoney, @Param("incomeMoney") BigDecimal incomeMoney);
 }

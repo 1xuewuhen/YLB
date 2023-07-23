@@ -37,4 +37,9 @@ public class TaskManager {
     public void invokeGenerateIncomePlan() {
         incomeService.generateIncomePlan();
     }
+    // 收益的返还
+    @Scheduled(cron = "0 0 2 * * ?")
+    public void invokeGenerateIncomeBack(){
+        incomeService.generateIncomeBack();
+    }
 }
