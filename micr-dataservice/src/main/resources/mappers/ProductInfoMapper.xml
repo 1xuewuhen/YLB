@@ -49,6 +49,16 @@
         from b_product_info
         where product_type = #{pType}
     </select>
+    <!--获取要处理的理财产品记录-->
+    <select id="selectFullTimeProducts" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from b_product_info
+        where product_status = #{status}
+        and product_full_time >=#{beginTime}
+        and product_full_time &lt; #{endTime}
+        order by id
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from b_product_info
@@ -240,6 +250,11 @@
         update b_product_info
         set product_status    = 1,
             product_full_time = now()
+        where id = #{id}
+    </update>
+    <update id="updateStatus">
+        update b_product_info
+        set product_status = #{status}
         where id = #{id}
     </update>
 </mapper>

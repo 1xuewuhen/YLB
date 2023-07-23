@@ -28,4 +28,7 @@ public interface BidInfoMapper {
 
     // 充值记录
     List<BidInfo> selectByUid(@Param("uid") Integer uid, @Param("offset") int offset, @Param("rows") Integer rows);
+
+    // 某个产品的投资记录
+    List<BidInfo> selectByProdId(@Param("productId") Integer productId, @Param("status") Integer status);
 }

@@ -24,4 +24,8 @@ public interface YLBConstant {
     Integer INVEST_STATUS_SUCCESS = 1;
     Integer INVEST_STATUS_FAIL = 2;
 
+    // 收益状态(0~计划,1~返还)
+    Integer INCOME_STATUS_PLAN = 0;
+    Integer INCOME_STATUS_BACK = 1;
+
 }

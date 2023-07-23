@@ -53,6 +53,15 @@
         order by bid_time desc
         LIMIT #{offset}, #{rows}
     </select>
+    <!--某个产品的投资记录-->
+    <select id="selectByProdId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from b_bid_info
+        where prod_id = #{productId}
+        and bid_status =#{status}
+        order by id
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
