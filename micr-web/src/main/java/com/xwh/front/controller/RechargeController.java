@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -45,7 +42,7 @@ public class RechargeController extends BaseController {
             @RequestParam(value = "pageSize", required = false, defaultValue = "6") Integer pageSize
 
     ) {
-        Map<String,List<?>> map = new HashMap<>();
+        Map<String, List<?>> map = new HashMap<>();
         if (Objects.nonNull(uid)) {
             pageNo = CommonUtil.defaultPageNo(pageNo);
             pageSize = CommonUtil.defaultPageSize(pageSize);
@@ -53,9 +50,9 @@ public class RechargeController extends BaseController {
             List<Record> records = toView(listMap.get("records"));
             List<Record> bidInfosRecords = toView(listMap.get("bidInfos"));
             List<Record> incomeRecords = toView(listMap.get("incomeRecords"));
-            map.put("records",records);
-            map.put("bidInfosRecords",bidInfosRecords);
-            map.put("incomeRecords",incomeRecords);
+            map.put("records", records);
+            map.put("bidInfosRecords", bidInfosRecords);
+            map.put("incomeRecords", incomeRecords);
         }
         return R.ok().setData(map);
     }
@@ -68,64 +65,51 @@ public class RechargeController extends BaseController {
                 RechargeRecord rechargeRecord = (RechargeRecord) item;
                 record.setId(rechargeRecord.getId());
                 record.setRechargeMoney(rechargeRecord.getRechargeMoney());
-                if (Objects.nonNull(rechargeRecord.getRechargeTime())) {
-                    record.setRechargeDate(DateFormatUtils.format(rechargeRecord.getRechargeTime(), "yyyy-MM-dd"));
-                } else {
-                    record.setRechargeDate("----");
-                }
-                switch (rechargeRecord.getRechargeStatus()) {
-                    case 0:
-                        record.setResult("充值中");
-                        break;
-                    case 1:
-                        record.setResult("成功");
-                        break;
-                    case 2:
-                        record.setResult("失败");
-                        break;
-                }
+                record.setRechargeDate(formatTime(rechargeRecord.getRechargeTime()));
+                record.setResult(modifyResult(rechargeRecord.getRechargeStatus()));
             } else if (item instanceof BidInfo) {
                 BidInfo bidInfo = (BidInfo) item;
                 record.setId(bidInfo.getId());
                 record.setRechargeMoney(bidInfo.getBidMoney());
-                if (Objects.nonNull(bidInfo.getBidTime())) {
-                    record.setRechargeDate(DateFormatUtils.format(bidInfo.getBidTime(), "yyyy-MM-dd"));
-                } else {
-                    record.setRechargeDate("----");
-                }
-                switch (bidInfo.getBidStatus()) {
-                    case 0:
-                        record.setResult("充值中");
-                        break;
-                    case 1:
-                        record.setResult("成功");
-                        break;
-                    case 2:
-                        record.setResult("失败");
-                        break;
-                }
+                record.setRechargeDate(formatTime(bidInfo.getBidTime()));
+                record.setResult(modifyResult(bidInfo.getBidStatus()));
             } else if (item instanceof IncomeRecord) {
                 IncomeRecord incomeRecord = (IncomeRecord) item;
                 record.setId(incomeRecord.getId());
                 record.setRechargeMoney(incomeRecord.getBidMoney());
-                if (Objects.nonNull(incomeRecord.getIncomeDate())) {
-                    record.setRechargeDate(DateFormatUtils.format(incomeRecord.getIncomeDate(), "yyyy-MM-dd"));
-                } else {
-                    record.setRechargeDate("----");
-                }
-                switch (incomeRecord.getIncomeStatus()) {
-                    case 0:
-                        record.setResult("充值中");
-                        break;
-                    case 1:
-                        record.setResult("成功");
-                        break;
-                    case 2:
-                        record.setResult("失败");
-                        break;
-                }
+                record.setRechargeDate(formatTime(incomeRecord.getIncomeDate()));
+                record.setResult(modifyResult(incomeRecord.getIncomeStatus()));
             }
             return record;
         }).collect(Collectors.toList());
+    }
+
+    private String modifyResult(Integer rechargeStatus) {
+        String result = "";
+        switch (rechargeStatus) {
+            case 0:
+                result = "充值中";
+                break;
+            case 1:
+                result = "成功";
+                break;
+            case 2:
+                result = "失败";
+                break;
+            default:
+                result = "";
+                break;
+        }
+        return result;
+    }
+
+    private String formatTime(Date rechargeTime) {
+        String result = "";
+        if (Objects.nonNull(rechargeTime)) {
+            result = DateFormatUtils.format(rechargeTime, "yyyy-MM-dd");
+        } else {
+            result = "----";
+        }
+        return result;
     }
 }
