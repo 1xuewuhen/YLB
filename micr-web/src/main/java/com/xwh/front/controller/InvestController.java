@@ -66,9 +66,10 @@ public class InvestController extends BaseController {
             @RequestHeader("uid") Integer uid,
             @RequestParam("productId") Integer productId,
             @RequestParam("money") BigDecimal money) {
-        if (Objects.nonNull(uid) && Objects.nonNull(productId) &&
-                (Objects.nonNull(money) &&
-                        (CommonUtil.geBigDecimal(money.remainder(new BigDecimal("100")), BigDecimal.ZERO)) && CommonUtil.geBigDecimal(money, new BigDecimal("100")))) {
+        if (Objects.nonNull(uid) &&
+                Objects.nonNull(productId) && (Objects.nonNull(money) &&
+                (CommonUtil.geBigDecimal(money.remainder(new BigDecimal("100")), BigDecimal.ZERO))
+                && CommonUtil.geBigDecimal(money, new BigDecimal("100")))) {
             investService.investProduct(uid, productId, money);
             modifyInvestRank(uid, money);
             return R.ok();
