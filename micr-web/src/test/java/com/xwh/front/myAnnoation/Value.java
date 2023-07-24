@@ -16,5 +16,5 @@ import java.util.Date;
 public @interface Value {
     String value();
 
-    int date();
+    int date() default 0;
 }

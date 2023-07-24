@@ -43,6 +43,10 @@ const routes: RouteRecordRaw[] = [
         path: '/userCenter',
         name: 'userCenter',
         component: () => import('@/views/userCenter/UserCenterView.vue')
+    }, {
+        path: '/userPay',
+        name: 'userPay',
+        component: () => import('@/views/userPay/UserPayView.vue')
     }
 ]
 const router = createRouter({
