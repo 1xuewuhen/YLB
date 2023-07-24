@@ -66,19 +66,19 @@ public class RechargeController extends BaseController {
                 RechargeRecord rechargeRecord = (RechargeRecord) item;
                 record.setId(rechargeRecord.getId());
                 record.setRechargeMoney(rechargeRecord.getRechargeMoney());
-                record.setRechargeDate(formatTime(rechargeRecord.getRechargeTime()));
+                record.setRechargeDate(CommonUtil.formatTime(rechargeRecord.getRechargeTime()));
                 record.setResult(modifyResult(rechargeRecord.getRechargeStatus()));
             } else if (item instanceof BidInfo) {
                 BidInfo bidInfo = (BidInfo) item;
                 record.setId(bidInfo.getId());
                 record.setRechargeMoney(bidInfo.getBidMoney());
-                record.setRechargeDate(formatTime(bidInfo.getBidTime()));
+                record.setRechargeDate(CommonUtil.formatTime(bidInfo.getBidTime()));
                 record.setResult(modifyResult(bidInfo.getBidStatus()));
             } else if (item instanceof IncomeRecord) {
                 IncomeRecord incomeRecord = (IncomeRecord) item;
                 record.setId(incomeRecord.getId());
                 record.setRechargeMoney(incomeRecord.getBidMoney());
-                record.setRechargeDate(formatTime(incomeRecord.getIncomeDate()));
+                record.setRechargeDate(CommonUtil.formatTime(incomeRecord.getIncomeDate()));
                 record.setResult(modifyResult(incomeRecord.getIncomeStatus()));
             }
             return record;
@@ -104,13 +104,4 @@ public class RechargeController extends BaseController {
         return result;
     }
 
-    private String formatTime(Date rechargeTime) {
-        String result = "";
-        if (Objects.nonNull(rechargeTime)) {
-            result = DateFormatUtils.format(rechargeTime, "yyyy-MM-dd");
-        } else {
-            result = "----";
-        }
-        return result;
-    }
 }

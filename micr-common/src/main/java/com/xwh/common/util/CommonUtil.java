@@ -5,8 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.xwh.common.enums.ERRORCode;
 import com.xwh.common.exception.InfoException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -72,5 +74,15 @@ public class CommonUtil {
             throw new RuntimeException(generateJSON(ERRORCode.DATA_MONEY_ERROR.getCode(), ERRORCode.DATA_MONEY_ERROR.getMessage()));
         }
         return n1.compareTo(n2) >= 0;
+    }
+
+    public static String formatTime(Date rechargeTime) {
+        String result = "";
+        if (Objects.nonNull(rechargeTime)) {
+            result = DateFormatUtils.format(rechargeTime, "yyyy-MM-dd");
+        } else {
+            result = "----";
+        }
+        return result;
     }
 }
