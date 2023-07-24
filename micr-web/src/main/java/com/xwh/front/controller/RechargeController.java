@@ -53,8 +53,9 @@ public class RechargeController extends BaseController {
             map.put("records", records);
             map.put("bidInfosRecords", bidInfosRecords);
             map.put("incomeRecords", incomeRecords);
+            return R.ok().setData(map);
         }
-        return R.ok().setData(map);
+        return R.error();
     }
 
     private List<Record> toView(List<?> lists) {
