@@ -1,21 +1,19 @@
 package com.xwh.front;
 
-import com.xwh.common.util.CommonUtil;
-import com.xwh.front.service.AliyunRealNameService;
+import com.xwh.front.model.User;
+import com.xwh.front.myFramework.XFramework;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.annotation.Resource;
 
 @SpringBootTest
 class MicrWebApplicationTests {
 
-    @Resource
-    private AliyunRealNameService aliyunRealNameService;
-
     @Test
-    void contextLoads() {
-//        aliyunRealNameService.realName();
+    public void test(){
+        XFramework xFramework = new XFramework();
+        User user = xFramework.getBean(User.class);
+        System.out.println(user);
     }
+
 
 }
