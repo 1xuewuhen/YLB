@@ -50,7 +50,7 @@ public class UserController extends BaseController {
      */
     @ApiOperation(value = "获取用户资金信息", notes = "获取用户资金信息，包括用户名，登录时间，金额，邮箱号，手机号")
     @GetMapping("/UserAllAccountInfo")
-    public R UserAllAccountInfo(@RequestParam("uid") Integer uid) {
+    public R UserAllAccountInfo(@RequestParam(value = "uid",required = false) Integer uid) {
         UserAccountInfo userAccountInfo = null;
         if (Objects.nonNull(uid)) {
             userAccountInfo = userService.queryUserAllInfo(uid);

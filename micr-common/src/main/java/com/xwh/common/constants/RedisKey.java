@@ -17,4 +17,7 @@ public interface RedisKey {
     String KEY_EMAIL_CODE_LOGIN = "EMAIL:LOGIN:";
     // 认证使用的验证码
     String KEY_EMAIL_CODE_AUTHENTICATION = "EMAIL:AUTHENTICATION:";
+
+    // 登录用户
+    String KEY_LOGIN_USER = "LOGIN:USER:";
 }

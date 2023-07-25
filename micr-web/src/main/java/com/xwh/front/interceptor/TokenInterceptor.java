@@ -1,14 +1,19 @@
 package com.xwh.front.interceptor;
 
 import com.alibaba.fastjson.JSON;
+import com.xwh.api.model.User;
+import com.xwh.common.constants.RedisKey;
 import com.xwh.common.enums.ERRORCode;
 import com.xwh.common.util.JwtUtil;
 import com.xwh.front.view.R;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
@@ -18,12 +23,14 @@ import java.io.PrintWriter;
  * 时间:2023/7/12
  */
 @Slf4j
+@Component
 public class TokenInterceptor implements HandlerInterceptor {
-
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         response.setContentType("application/json;charset=utf-8");
+//        stringRedisTemplate.boundValueOps(RedisKey.KEY_LOGIN_USER)
+
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             return true;
         }
@@ -37,16 +44,16 @@ public class TokenInterceptor implements HandlerInterceptor {
                 String jwt = authorization.substring(7);
                 Claims claims = JwtUtil.readJwt(jwt);
                 Integer jwtUid = claims.get("userId", Integer.class);
-                if (headerUid.equals(String.valueOf(jwtUid))){
+                if (headerUid.equals(String.valueOf(jwtUid))) {
                     // token和发起请求是同一个人请求可以被处理
                     isRequestSend = true;
                 }
             }
-        }catch (Exception e){
-            log.error("token校验错误:{}",e.getMessage());
+        } catch (Exception e) {
+            log.error("token校验错误:{}", e.getMessage());
         }
         // token 没有验证通过
-        if (!isRequestSend){
+        if (!isRequestSend) {
             R r = R.error().setCode(ERRORCode.TOKEN_INVALID.getCode()).setMsg(ERRORCode.TOKEN_INVALID.getMessage());
             String errorJson = JSON.toJSONString(r);
             PrintWriter writer = response.getWriter();
@@ -56,6 +63,5 @@ public class TokenInterceptor implements HandlerInterceptor {
         }
         return isRequestSend;
     }
-
 
 }

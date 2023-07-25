@@ -6,20 +6,20 @@
     <div class="user-pay-left fl">
       <p class="user-pay-title1">我的账户</p>
       <div class="user-pay-list">
-        <a href="javascript:;" class="user-pay-list-on">充值</a>
-        <a href="javascript:;" target="_blank">我的信息</a>
-        <a href="javascript:;" target="_blank">投资记录</a>
-        <a href="javascript:;" target="_blank">收益记录</a>
+        <a href="javascript:void (0)" class="user-pay-list-on">充值</a>
+        <a href="javascript:void (0)">我的信息</a>
+        <a href="javascript:void (0)">投资记录</a>
+        <a href="javascript:void (0)">收益记录</a>
       </div>
     </div>
     <div class="user-pay-right fl">
       <p class="user-pay-title2">第三方支付平台</p>
       <div class="user-pay-form">
         <img src="@/assets/image/pay-1.jpg" alt="">
-        <form action="" id="money_submit">
+        <form action="javascript:void (0)" id="money_submit">
           <p class="user-pay-form-ts">请输入金额</p>
-          <input type="text" placeholder="元" name="" class="number-money">
-          <input type="submit" value="支付" class="submit-btn">
+          <input type="text" v-model="money" placeholder="元" name="" class="number-money">
+          <input type="button" @click="payMoney" value="支付" class="submit-btn">
         </form>
       </div>
       <div class="user-pay-sm">
@@ -36,7 +36,13 @@
 </template>
 
 <script setup lang="ts">
+import {ref} from "vue";
+import HttpUtil from "@/api";
 
+const money = ref(100)
+const payMoney = async () => {
+  window.location.href = "http://127.0.0.1:8000/api/v1/pay/recharge?money="+money.value
+}
 </script>
 
 

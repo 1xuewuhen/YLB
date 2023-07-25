@@ -17,11 +17,13 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @Resource
     private TokenCheckPathConfig tokenCheckPathConfig;
+    @Resource
+    private TokenInterceptor tokenInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 //        String[] addPath = {"/v1/user/realName"};
-        registry.addInterceptor(new TokenInterceptor())
+        registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns(tokenCheckPathConfig.getPath());
     }
 }
