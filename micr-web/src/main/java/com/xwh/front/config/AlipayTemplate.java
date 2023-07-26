@@ -41,6 +41,8 @@ public class AlipayTemplate {
 
     // 支付宝网关
     private String gatewayUrl;
+    // 超时时间
+    private String timeout_express;
 
     // 支付宝网关
     // public static String log_path = "C:\\";
@@ -67,6 +69,7 @@ public class AlipayTemplate {
                 + "\"total_amount\":\"" + total_amount + "\","
                 + "\"subject\":\"" + subject + "\","
                 + "\"body\":\"" + body + "\","
+                + "\"timeout_express\":\"" + timeout_express + "\","
                 + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
 
         //若想给BizContent增加其他可选请求参数，以增加自定义超时时间参数timeout_express来举例说明

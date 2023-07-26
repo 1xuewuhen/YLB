@@ -57,6 +57,11 @@
             </if>
         </trim>
     </insert>
+    <insert id="addMoneyByUid">
+        update u_finance_account
+        set available_money = available_money + #{money}
+        where uid = #{uid}
+    </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.xwh.api.model.FinanceAccount">
         update u_finance_account
         <set>

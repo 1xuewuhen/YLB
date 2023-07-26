@@ -26,4 +26,7 @@ public interface FinanceAccountMapper {
 
     // 把每个收益，进行返还，本金+利息
     void updateAvailableMoneyByIncome(@Param("uid") Integer uid, @Param("bidMoney") BigDecimal bidMoney, @Param("incomeMoney") BigDecimal incomeMoney);
+
+    // 充值金额
+    void addMoneyByUid(@Param("uid") String uid, @Param("money") BigDecimal money);
 }

@@ -37,11 +37,15 @@
 
 <script setup lang="ts">
 import {ref} from "vue";
-import HttpUtil from "@/api";
+import {useRouter, useRoute} from "vue-router";
 
+const router = useRouter()
+const route = useRoute()
 const money = ref(100)
+
+const uid = route.query.uid
 const payMoney = async () => {
-  window.location.href = "http://127.0.0.1:8000/api/v1/pay/recharge?money="+money.value
+  window.location.href = `http://127.0.0.1:8000/api/v1/pay/recharge?money=${money.value}&uid=${uid}`
 }
 </script>
 

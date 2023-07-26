@@ -4,6 +4,7 @@ import com.xwh.api.model.RechargeRecord;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface RechargeRecordMapper {
     int deleteByPrimaryKey(Integer id);
@@ -21,4 +22,6 @@ public interface RechargeRecordMapper {
 
     // 充值记录
     List<RechargeRecord> selectByUid(@Param("uid") Integer uid, @Param("offset") int offset, @Param("rows") Integer rows);
+
+    void addRecharge(@Param("map") Map<String, String> map);
 }

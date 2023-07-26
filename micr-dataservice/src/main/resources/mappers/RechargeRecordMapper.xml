@@ -100,6 +100,11 @@
             </if>
         </trim>
     </insert>
+    <insert id="addRecharge">
+        insert into b_recharge_record
+            ( uid, recharge_no, recharge_status, recharge_money, recharge_time, recharge_desc, channel)
+        values (#{map.uid},#{map.recharge_no},1,#{map.recharge_money},now(),#{map.recharge_desc},#{map.channel})
+    </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.xwh.api.model.RechargeRecord">
         update b_recharge_record
         <set>

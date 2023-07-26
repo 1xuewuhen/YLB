@@ -18,7 +18,7 @@
         </ul>
         <div class="user-head-money fr">
           <p>可用余额：<span>￥{{ userAllAccountInfo.availableMoney }}元</span></p>
-          <router-link to="/userPay" class="user-head-a1">充值</router-link>
+          <router-link to="" @click="recharge" class="user-head-a1">充值</router-link>
           <router-link to="/index" class="user-head-a2">投资</router-link>
         </div>
       </div>
@@ -73,27 +73,40 @@ const incomeRecords = ref<RecodeType[]>([{
   "rechargeMoney": 0
 }])
 const userinfo = JSON.parse(sessionStorage.getItem("userinfo"))
-onMounted(() => {
-  xxx()
-  HttpUtil.get(`/v1/recharge/records?uid=${route.query.uid}`).then(value => {
+const uid = ref(0)
+onMounted(async () => {
+  await xxx()
+})
+
+const recharge = () => {
+  router.push({
+    path:'/userPay',
+    query:{
+      uid:uid.value
+    }
+  })
+}
+const xxx = async () => {
+  uid.value = route.query.uid
+  if (!uid.value) {
+    uid.value = userinfo.uid
+    await router.push({
+      path: '/userCenter',
+      query: {
+        uid: uid.value
+      }
+    })
+  }
+  await HttpUtil.get(`/v1/user/UserAllAccountInfo?uid=${uid.value}`).then(value => {
+    if (value.data.code == 1000) {
+      userAllAccountInfo.value = value.data.data
+    }
+  })
+  await HttpUtil.get(`/v1/recharge/records?uid=${uid.value}`).then(value => {
     if (value.data.code == 1000) {
       records.value = value.data.data.records
       bidInfosRecords.value = value.data.data.bidInfosRecords
       incomeRecords.value = value.data.data.incomeRecords
-
-    }
-  })
-})
-
-const xxx = () => {
-  let uid = route.query.uid
-  if (!uid) {
-    uid = userinfo.uid
-    route.query.uid = uid
-  }
-  HttpUtil.get(`/v1/user/UserAllAccountInfo?uid=${uid}`).then(value => {
-    if (value.data.code == 1000) {
-      userAllAccountInfo.value = value.data.data
     }
   })
 }
